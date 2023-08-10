@@ -93,7 +93,7 @@ function createApp(): express.Express {
 
   app.use('/favicon', express.static(downloadedFaviconFolder));
 
-  app.use('/', routes);
+  app.use(appConfig.frontend.basePath, routes);
 
 
   // global error handler
