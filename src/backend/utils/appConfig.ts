@@ -72,6 +72,7 @@ const AuthConfig = z.object({
  * Frontend configuration
  */
 const FrontendConfig = z.object({
+  basePath: z.string(), // Base path for routing
   title: z.string(), // Title for pages
   description: z.string(), // Description for pages
   startPage: z.string(), // Start page
@@ -126,6 +127,7 @@ const defaultConfig: AppConfig = {
     },
   },
   'frontend': {
+    'basePath': '/docs',
     'title': 'CodeX Docs',
     'description': 'Free Docs app powered by Editor.js ecosystem',
     'startPage': '',
