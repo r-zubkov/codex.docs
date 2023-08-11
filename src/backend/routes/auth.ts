@@ -48,12 +48,12 @@ router.post('/auth', parseForm, csrfProtection, async (req: Request, res: Respon
       iat: Date.now(),
     }, appConfig.auth.password + appConfig.auth.secret);
 
-    res.cookie('authToken', token, {
+    res.cookie(`${appConfig.frontend.tokenPrefix}AuthToken`, token, {
       httpOnly: true,
       expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
     });
 
-    res.redirect('/');
+    res.redirect(appConfig.frontend.basePath);
   } catch (err) {
     res.render('auth', {
       title: 'Login page',
