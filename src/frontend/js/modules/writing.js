@@ -1,3 +1,5 @@
+import frontendConfig from '../utils/frontendConfig';
+
 /**
  * Module for pages create/edit
  */
@@ -149,7 +151,7 @@ export default class Writing {
   async saveButtonClicked() {
     try {
       const writingData = await this.getData();
-      const endpoint = this.page ? '/api/page/' + this.page._id : '/api/page';
+      const endpoint = this.page ? `${frontendConfig.basePath}/api/page/` + this.page._id : `${frontendConfig.basePath}/api/page`;
 
       try {
         let response = await fetch(endpoint, {
@@ -163,7 +165,9 @@ export default class Writing {
         response = await response.json();
 
         if (response.success) {
-          window.location.pathname = response.result.uri ? response.result.uri : '/page/' + response.result._id;
+          window.location.pathname = response.result.uri
+            ? `${frontendConfig.basePath}/${response.result.uri}`
+            : `${frontendConfig.basePath}/page/` + response.result._id;
         } else {
           alert(response.error);
           console.log('Validation failed:', response.error);
@@ -182,7 +186,7 @@ export default class Writing {
    */
   async removeButtonClicked() {
     try {
-      const endpoint = this.page ? '/api/page/' + this.page._id : '';
+      const endpoint = this.page ? `${frontendConfig.basePath}/api/page/` + this.page._id : '';
 
       let response = await fetch(endpoint, {
         method: 'DELETE'
@@ -191,9 +195,9 @@ export default class Writing {
       response = await response.json();
       if (response.success) {
         if (response.result && response.result._id) {
-          document.location = '/page/' + response.result._id;
+          document.location = `${frontendConfig.basePath}/page/` + response.result._id;
         } else {
-          document.location = '/';
+          document.location = frontendConfig.basePath;
         }
       } else {
         alert(response.error);
