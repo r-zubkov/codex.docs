@@ -13,18 +13,18 @@ uploads:
     secretAccessKey: "my-secret-key"
 frontend:
   basePath: "/docs"
-  title: "CodeX Docs"
-  description: "Free Docs app powered by Editor.js ecosystemt"
+  title: "Docs"
+  description: "Docs app"
   startPage: ""
   misprintsChatId: "12344564"
   yandexMetrikaId: ""
   carbon:
     serve: ""
     placement: ""
-  menu:
-    - "Guides"
-    - title: "CodeX"
-      uri: "https://codex.so"
+  # menu:
+  #   - "Guides"
+  #   - title: "CodeX"
+  #     uri: "https://codex.so"
 
 auth:
   password: secretpassword
