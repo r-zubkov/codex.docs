@@ -11,7 +11,7 @@
         {% if page._parent %}
           <a class="page__header-nav-item"
             {% if pageParent.uri %}
-              href="{{ config.basePath ~ pageParent.uri }}"
+              href="{{ config.basePath ~ '/' ~ pageParent.uri }}"
             {% else %}
               href="{{ config.basePath ~ '/page/' ~ pageParent._id }}"
             {% endif %}>
