@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import appConfig from '../utils/appConfig.js';
 import verifyToken from './middlewares/token.js';
 import PagesOrder from '../controllers/pagesOrder.js';
 import Pages from '../controllers/pages.js';
@@ -12,7 +13,7 @@ router.get('/', verifyToken, async (req: Request, res: Response) => {
 
   // Check if config consists startPage
   if (config.startPage) {
-    return res.redirect(config.startPage);
+    return res.redirect(`${appConfig.frontend.basePath}/${config.startPage}`);
   } else {
     const pageOrder = await PagesOrder.getRootPageOrder();
 
@@ -21,7 +22,7 @@ router.get('/', verifyToken, async (req: Request, res: Response) => {
       // Get the first parent page
       const page = await Pages.get(pageOrder.order[0]);
 
-      res.redirect(page.uri!);
+      res.redirect(`${appConfig.frontend.basePath}/${page.uri!}`);
     } else {
       res.render('pages/index', { isAuthorized: res.locals.isAuthorized });
     }
