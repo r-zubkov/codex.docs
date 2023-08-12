@@ -1,4 +1,4 @@
-import frontendConfig from '../utils/frontendConfig';
+import frontendConfig from '../../../../frontendConfig';
 
 /**
  * Module for pages create/edit
