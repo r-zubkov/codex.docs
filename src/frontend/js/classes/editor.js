@@ -1,4 +1,5 @@
 import EditorJS from '@editorjs/editorjs';
+import frontendConfig from '../../../../frontendConfig';
 
 /**
  * Block Tools for the Editor
@@ -50,8 +51,8 @@ export default class Editor {
           config: {
             types: 'image/*, video/mp4',
             endpoints: {
-              byFile: '/api/transport/image',
-              byUrl: '/api/transport/fetch',
+              byFile: `${frontendConfig.basePath}/api/transport/image`,
+              byUrl: `${frontendConfig.basePath}/api/transport/fetch`,
             },
           },
         },
@@ -59,7 +60,7 @@ export default class Editor {
         linkTool: {
           class: LinkTool,
           config: {
-            endpoint: '/api/fetchUrl',
+            endpoint: `${frontendConfig.basePath}/api/fetchUrl`,
           },
         },
 
