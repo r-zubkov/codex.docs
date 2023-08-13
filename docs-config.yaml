@@ -1,7 +1,7 @@
 port: 3000
 host: "localhost"
 uploads:
-  driver: "local" # you can change database driver here. 'local' or 'static' or 's3'
+  driver: "local" # you can change uploads driver here. 'local' or 'static' or 's3'
   local:
     path: "./uploads"
   static:
