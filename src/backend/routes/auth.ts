@@ -48,7 +48,7 @@ router.post('/auth', parseForm, csrfProtection, async (req: Request, res: Respon
       iat: Date.now(),
     }, appConfig.auth.password + appConfig.auth.secret);
 
-    res.cookie(`${appConfig.frontend.tokenPrefix}AuthToken`, token, {
+    res.cookie(`${appConfig.frontend.appName}AuthToken`, token, {
       httpOnly: true,
       expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
     });

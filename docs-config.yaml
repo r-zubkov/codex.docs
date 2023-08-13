@@ -12,6 +12,7 @@ uploads:
     accessKeyId: "my-access-key"
     secretAccessKey: "my-secret-key"
 frontend:
+  appName: "docs"
   basePath: "/docs"
   tokenPrefix: "docs"
   title: "Docs"
@@ -39,5 +40,5 @@ database:
   driver: local # you can change database driver here. 'mongodb' or 'local'
   local:
     path: ./db
-#  mongodb:
-#    uri: mongodb://localhost:27017/docs
+  # mongodb:
+  #   uri: mongodb://localhost:27017/docs

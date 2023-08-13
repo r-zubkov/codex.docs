@@ -11,7 +11,7 @@ import appConfig from '../../utils/appConfig.js';
  * @param next - next function
  */
 export default async function verifyToken(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const token = req.cookies[`${appConfig.frontend.tokenPrefix}AuthToken`];
+  const token = req.cookies[`${appConfig.frontend.appName}AuthToken`];
 
   try {
     if (!appConfig.auth.password) {
