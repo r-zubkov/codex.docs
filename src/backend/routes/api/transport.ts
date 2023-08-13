@@ -46,6 +46,8 @@ const fileUploader = multer({
 function getFileUrl(fileData: FileData): string {
   if (appConfig.uploads.driver === 'local') {
     return '/uploads/' + fileData.filename;
+  } else if(appConfig.uploads.driver === 'static') {
+    return `${appConfig.uploads.static.serverPrefix}/uploads/` + fileData.filename;
   } else {
     const baseUrlWithoutTrailingSlash = appConfig.uploads.s3.baseUrl.replace(/\/+$/, '');
 

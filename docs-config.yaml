@@ -1,9 +1,12 @@
 port: 3000
 host: "localhost"
 uploads:
-  driver: "local"
+  driver: "local" # you can change database driver here. 'local' or 'static' or 's3'
   local:
     path: "./uploads"
+  static:
+    serverPrefix: "/static"
+    path: "/home/static/uploads"
   s3:
     bucket: "my-bucket"
     region: "eu-central-1"

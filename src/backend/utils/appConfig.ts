@@ -23,6 +23,17 @@ const LocalUploadsConfig = z.object({
 });
 
 /**
+ * Config for local static uploads driver
+ */
+ const LocalStaticUploadsConfig = z.object({
+  driver: z.literal('static'),
+  static: z.object({
+    serverPrefix: z.string(), // server prefix
+    path: z.string(), // path to the database directory
+  }),
+});
+
+/**
  * Config for S3 uploads driver
  */
 const S3UploadsConfig = z.object({
@@ -38,6 +49,7 @@ const S3UploadsConfig = z.object({
 });
 
 export type LocalUploadsConfig = z.infer<typeof LocalUploadsConfig>;
+export type LocalStaticUploadsConfig = z.infer<typeof LocalStaticUploadsConfig>;
 export type S3UploadsConfig = z.infer<typeof S3UploadsConfig>;
 
 /**
@@ -108,7 +120,7 @@ const AppConfig = z.object({
   port: z.number(), // Port to listen on
   host: z.string(), // Host to listen on
   favicon: z.string().optional(), // Path or URL to favicon
-  uploads: z.union([LocalUploadsConfig, S3UploadsConfig]), // Uploads configuration
+  uploads: z.union([LocalUploadsConfig, LocalStaticUploadsConfig, S3UploadsConfig]), // Uploads configuration
   hawk: HawkConfig.optional().nullable(), // Hawk configuration
   frontend: FrontendConfig, // Frontend configuration
   auth: AuthConfig, // Auth configuration
