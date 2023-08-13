@@ -17,7 +17,6 @@ uploads:
 frontend:
   appName: "docs"
   basePath: "/docs"
-  tokenPrefix: "docs"
   title: "Docs"
   description: "Docs app"
   startPage: ""
