@@ -84,6 +84,7 @@ const AuthConfig = z.object({
  * Frontend configuration
  */
 const FrontendConfig = z.object({
+  isPrivate: z.boolean().default(false), // Show pages only in edit mode
   appName: z.string(), // App name
   basePath: z.string(), // Base path for routing
   title: z.string(), // Title for pages
@@ -140,6 +141,7 @@ const defaultConfig: AppConfig = {
     },
   },
   'frontend': {
+    'isPrivate': false, 
     'appName': 'docs',  
     'basePath': '/docs',
     'title': 'CodeX Docs',

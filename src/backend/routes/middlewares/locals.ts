@@ -8,10 +8,25 @@ import appConfig from '../../utils/appConfig.js';
  * @param res - response object
  * @param next - next function
  */
-export default function allowEdit(req: Request, res: Response, next: NextFunction): void {
+export function allowEdit(req: Request, res: Response, next: NextFunction): void {
   if (res.locals.isAuthorized) {
     next();
   } else {
     res.redirect(`${appConfig.frontend.basePath}/auth`);
+  }
+}
+
+/**
+ * Middleware for checking frontend.isPrivate property, which allows to view pages for private project
+ *
+ * @param req - request object
+ * @param res - response object
+ * @param next - next function
+ */
+ export function allowView(req: Request, res: Response, next: NextFunction): void {
+  if (appConfig.frontend.isPrivate) {
+    allowEdit(req, res, next);
+  } else {
+    next();
   }
 }

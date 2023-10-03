@@ -15,6 +15,7 @@ uploads:
     accessKeyId: "my-access-key"
     secretAccessKey: "my-secret-key"
 frontend:
+  isPrivate: false
   appName: "docs"
   basePath: "/docs"
   title: "Docs"

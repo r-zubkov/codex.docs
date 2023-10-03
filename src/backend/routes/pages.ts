@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import Pages from '../controllers/pages.js';
 import PagesOrder from '../controllers/pagesOrder.js';
 import verifyToken from './middlewares/token.js';
-import allowEdit from './middlewares/locals.js';
+import { allowEdit } from './middlewares/locals.js';
 import PagesFlatArray from '../models/pagesFlatArray.js';
 import { toEntityId } from '../database/index.js';
 
