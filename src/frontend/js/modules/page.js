@@ -57,7 +57,7 @@ export default class Page {
         selector: '.block-code__content',
       });
     } catch (error) {
-      console.error(error); // @todo send to Hawk
+      console.error(error);
     }
   }
 
@@ -76,7 +76,7 @@ export default class Page {
         appendTo: document.getElementById('layout-sidebar-right'),
       });
     } catch (error) {
-      console.error(error); // @todo send to Hawk
+      console.error(error);
     }
   }
 
@@ -105,7 +105,7 @@ export default class Page {
       }, { once: true });
 
     } catch (error) {
-      console.error(error); // @todo send to Hawk
+      console.error(error);
     }
   }
 }

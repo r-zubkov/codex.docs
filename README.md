@@ -14,9 +14,6 @@ It's super easy to install and use.
 - 📂 Docs nesting — create any structure you need
 - 📱 Nice look on Desktop and Mobile
 - 🔥 Beautiful page URLs. Human-readable and SEO-friendly.
-- 🦅 [Hawk](https://hawk.so/?from=docs-demo) is hunting. Errors tracking integrated
-- 💌 [Misprints](https://github.com/codex-team/codex.misprints) reports to the Telegram / Slack
-- 📈 [Yandex Metrica](https://metrica.yandex.com/about) integrated
 - 🚢 Deploy easily — no DB and other deps required
 - 🤙 Simple configuration
 - ⚙️ Tune UI as you need. Collapse sections, hide the Sidebar

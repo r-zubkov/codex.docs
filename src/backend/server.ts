@@ -9,7 +9,6 @@
  import express, { NextFunction, Request, Response } from 'express';
  import path from 'path';
  import { fileURLToPath } from 'url';
- import HawkCatcher from '@hawk.so/nodejs';
  import os from 'os';
  import { downloadFavicon, FaviconData } from './utils/downloadFavicon.js';
  import morgan from 'morgan';
@@ -39,19 +38,10 @@
    const app = express();
    const localConfig = appConfig.frontend;
  
-   // Initialize the backend error tracking catcher.
-   if (appConfig.hawk?.backendToken) {
-     HawkCatcher.init(appConfig.hawk.backendToken);
-   }
- 
    // Get url to upload favicon from config
    const favicon = appConfig.favicon;
  
    app.locals.config = localConfig;
-   // Set client error tracking token as app local.
-   if (appConfig.hawk?.frontendToken) {
-     app.locals.config.hawkClientToken = appConfig.hawk.frontendToken;
-   }
  
    // view engine setup
    app.set('views', path.join(__dirname, './', 'views'));
@@ -98,10 +88,6 @@
  
    // global error handler
    app.use(function (err: unknown, req: Request, res: Response, next: NextFunction) {
-     // send any type of error to hawk server.
-     if (appConfig.hawk?.backendToken && err instanceof Error) {
-       HawkCatcher.send(err);
-     }
      // only send Http based exception to client.
      if (err instanceof HttpException) {
        // set locals, only providing error in development

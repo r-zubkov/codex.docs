@@ -21,11 +21,6 @@ frontend:
   title: "Docs"
   description: "Docs app"
   startPage: ""
-  misprintsChatId: "12344564"
-  yandexMetrikaId: ""
-  carbon:
-    serve: ""
-    placement: ""
   # menu:
   #   - "Guides"
   #   - title: "CodeX"
@@ -34,10 +29,6 @@ frontend:
 auth:
   password: secretpassword
   secret: supersecret
-
-hawk:
-#  frontendToken: "123"
-#  backendToken: "123"
 
 database:
   driver: local # you can change database driver here. 'mongodb' or 'local'

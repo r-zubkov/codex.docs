@@ -5,14 +5,6 @@ import path from 'path';
 import { z } from 'zod';
 
 /**
- * Configuration for Hawk errors catcher
- */
-const HawkConfig = z.object({
-  backendToken: z.string().optional(), // Hawk backend token
-  frontendToken: z.string().optional(), // Hawk frontend token
-});
-
-/**
  * Config for local uploads driver
  */
 const LocalUploadsConfig = z.object({
@@ -90,12 +82,6 @@ const FrontendConfig = z.object({
   title: z.string(), // Title for pages
   description: z.string(), // Description for pages
   startPage: z.string(), // Start page
-  misprintsChatId: z.string().optional(), // Telegram chat id for misprints
-  yandexMetrikaId: z.string().optional(), // Yandex metrika id
-  carbon: z.object({
-    serve: z.string().optional(), // Carbon serve url
-    placement: z.string().optional(), // Carbon placement
-  }),
   menu: z.array(z.union([z.string(), z.object({ title: z.string(),
     uri: z.string() })])), // Menu for pages
 });
@@ -122,7 +108,6 @@ const AppConfig = z.object({
   host: z.string(), // Host to listen on
   favicon: z.string().optional(), // Path or URL to favicon
   uploads: z.union([LocalUploadsConfig, LocalStaticUploadsConfig, S3UploadsConfig]), // Uploads configuration
-  hawk: HawkConfig.optional().nullable(), // Hawk configuration
   frontend: FrontendConfig, // Frontend configuration
   auth: AuthConfig, // Auth configuration
   database: z.union([LocalDatabaseConfig, MongoDatabaseConfig]), // Database configuration
@@ -147,17 +132,12 @@ const defaultConfig: AppConfig = {
     'title': 'CodeX Docs',
     'description': 'Free Docs app powered by Editor.js ecosystem',
     'startPage': '',
-    'carbon': {
-      'serve': '',
-      'placement': '',
-    },
     'menu': [],
   },
   'auth': {
     'secret': 'supersecret',
     'password': 'secretpassword',
   },
-  'hawk': null,
   'database': {
     'driver': 'local',
     'local': {
