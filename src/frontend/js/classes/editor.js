@@ -2,6 +2,11 @@ import EditorJS from '@editorjs/editorjs';
 import frontendConfig from '../../../../frontendConfig';
 
 /**
+ * Plugins
+ */
+ import Undo from 'editorjs-undo';
+
+/**
  * Block Tools for the Editor
  */
 import Header from '@editorjs/header';
@@ -36,6 +41,9 @@ export default class Editor {
    */
   constructor(editorConfig = {}, options = {}) {
     const defaultConfig = {
+      onReady: () => {
+        new Undo({ editor });
+      },
       tools: {
         header: {
           class: Header,
