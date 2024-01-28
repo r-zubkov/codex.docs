@@ -41,9 +41,7 @@ export default class Editor {
    */
   constructor(editorConfig = {}, options = {}) {
     const defaultConfig = {
-      onReady: () => {
-        new Undo({ editor });
-      },
+      onReady: () => this.handleReady(),
       tools: {
         header: {
           class: Header,
@@ -131,6 +129,14 @@ export default class Editor {
 
     this.editor = new EditorJS(Object.assign(defaultConfig, editorConfig));
   }
+
+  /**
+   * Init plugins on ready state
+   */
+  handleReady() {
+    const editor = this.editor
+    new Undo({ editor });
+  };
 
   /**
    * Return Editor data
