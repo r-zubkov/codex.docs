@@ -3981,6 +3981,11 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
+editorjs-drag-drop@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.npmjs.org/editorjs-drag-drop/-/editorjs-drag-drop-1.1.13.tgz"
+  integrity sha512-/82RIXP8/zix6Y8/Mnonk1z7XljFvKmsIFbCrP6JTbdWztqoApyUCsnouHTZ4tF51/BTszYV3Z9ennQrXrHCzA==
+
 editorjs-undo@^2.0.26:
   version "2.0.26"
   resolved "https://registry.npmjs.org/editorjs-undo/-/editorjs-undo-2.0.26.tgz"

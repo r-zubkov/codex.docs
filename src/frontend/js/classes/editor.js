@@ -5,6 +5,7 @@ import frontendConfig from '../../../../frontendConfig';
  * Plugins
  */
  import Undo from 'editorjs-undo';
+ import DragDrop from 'editorjs-drag-drop';
 
 /**
  * Block Tools for the Editor
@@ -136,6 +137,7 @@ export default class Editor {
   handleReady() {
     const editor = this.editor
     new Undo({ editor });
+    new DragDrop(editor);
   };
 
   /**
