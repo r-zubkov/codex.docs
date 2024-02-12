@@ -64,7 +64,7 @@
    } else {
      console.log('Favicon is empty, using default path');
      app.locals.favicon = {
-       destination: '/favicon.png',
+       destination: `/${appConfig.frontend.appName}/dist/favicon.png`,
        type: 'image/png',
      } as FaviconData;
    }

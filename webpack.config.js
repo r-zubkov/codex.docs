@@ -1,4 +1,5 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import frontendConfig from './frontendConfig.js';
@@ -83,6 +84,11 @@ export default () => {
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         filename: '[name].css',
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: `./public/favicon.png` },
+        ],
       }),
     ],
     optimization: {
