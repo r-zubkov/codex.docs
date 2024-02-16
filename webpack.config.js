@@ -86,9 +86,7 @@ export default () => {
         filename: '[name].css',
       }),
       new CopyPlugin({
-        patterns: [
-          { from: `./public/favicon.png` },
-        ],
+        patterns: [{ from: `./public` }],
       }),
     ],
     optimization: {
