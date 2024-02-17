@@ -85,3 +85,6 @@ db/
 *.local.yaml
 
 static-build
+
+# local configs
+frontend-config.js

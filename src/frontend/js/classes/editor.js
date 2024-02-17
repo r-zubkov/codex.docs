@@ -1,5 +1,5 @@
 import EditorJS from '@editorjs/editorjs';
-import frontendConfig from '../../../../frontendConfig';
+import FrontendConfig from '../../../../frontend-config';
 
 /**
  * Plugins
@@ -58,8 +58,8 @@ export default class Editor {
           config: {
             types: 'image/*, video/mp4',
             endpoints: {
-              byFile: `${frontendConfig.basePath}/api/transport/image`,
-              byUrl: `${frontendConfig.basePath}/api/transport/fetch`,
+              byFile: `${FrontendConfig.basePath}/api/transport/image`,
+              byUrl: `${FrontendConfig.basePath}/api/transport/fetch`,
             },
           },
         },
@@ -67,7 +67,7 @@ export default class Editor {
         linkTool: {
           class: LinkTool,
           config: {
-            endpoint: `${frontendConfig.basePath}/api/fetchUrl`,
+            endpoint: `${FrontendConfig.basePath}/api/fetchUrl`,
           },
         },
 

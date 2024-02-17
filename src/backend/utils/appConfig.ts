@@ -82,8 +82,10 @@ const FrontendConfig = z.object({
   title: z.string(), // Title for pages
   description: z.string(), // Description for pages
   startPage: z.string(), // Start page
-  menu: z.array(z.union([z.string(), z.object({ title: z.string(),
-    uri: z.string() })])), // Menu for pages
+  menu: z.array(z.union([
+    z.string(),
+    z.object({ title: z.string(), uri: z.string() })
+  ])), // Menu for pages
 });
 
 /**
@@ -129,8 +131,8 @@ const defaultConfig: AppConfig = {
     'isPrivate': false, 
     'appName': 'docs',  
     'basePath': '/docs',
-    'title': 'CodeX Docs',
-    'description': 'Free Docs app powered by Editor.js ecosystem',
+    'title': 'Docs',
+    'description': 'Docs app',
     'startPage': '',
     'menu': [],
   },

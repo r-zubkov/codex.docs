@@ -2,7 +2,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import frontendConfig from './frontendConfig.js';
+import FrontendConfig from './frontend-config.js';
 
 /**
  * The __dirname CommonJS variables are not available in ES modules.
@@ -36,7 +36,7 @@ export default () => {
     entry: './src/frontend/js/app.js',
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, `./public${frontendConfig.basePath}/dist`),
+      path: path.resolve(__dirname, `./public${FrontendConfig.basePath}/dist`),
       libraryExport: 'default', // uses to export .default field of app.js exported class instance
     },
     module: {
