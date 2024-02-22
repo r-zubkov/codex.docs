@@ -27,6 +27,7 @@ import Embed from '@editorjs/embed';
  */
 import InlineCode from '@editorjs/inline-code';
 import Marker from '@editorjs/marker';
+import Superscript from 'editorjs-superscript';
 
 /**
  * Class for working with Editor.js
@@ -46,7 +47,7 @@ export default class Editor {
       tools: {
         header: {
           class: Header,
-          inlineToolbar: ['marker', 'inlineCode'],
+          inlineToolbar: ['marker', 'superscript', 'inlineCode'],
           config: {
             placeholder: options.headerPlaceholder || '',
           },
@@ -109,6 +110,10 @@ export default class Editor {
         marker: {
           class: Marker,
           shortcut: 'CMD+SHIFT+M',
+        },
+
+        superscript: {
+          class: Superscript
         },
 
         raw: RawTool,

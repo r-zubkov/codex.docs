@@ -4020,6 +4020,11 @@ editorjs-drag-drop@^1.1.13:
   resolved "https://registry.npmjs.org/editorjs-drag-drop/-/editorjs-drag-drop-1.1.13.tgz"
   integrity sha512-/82RIXP8/zix6Y8/Mnonk1z7XljFvKmsIFbCrP6JTbdWztqoApyUCsnouHTZ4tF51/BTszYV3Z9ennQrXrHCzA==
 
+editorjs-superscript@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/editorjs-superscript/-/editorjs-superscript-1.0.0.tgz"
+  integrity sha512-p7nF6nkOA9wN56eqokVFqcr+LZnC+lLFM85fjFp++4pcx2RiJ7gtHiO/ziKDp3g1tpKUfJtI8m1eBHwAYRKWHQ==
+
 editorjs-undo@^2.0.26:
   version "2.0.26"
   resolved "https://registry.npmjs.org/editorjs-undo/-/editorjs-undo-2.0.26.tgz"
