@@ -21,8 +21,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-svg {
+/* fill color for btn icons */
+.docs-button svg {
   fill: currentColor;
+}
+
+/* fix for superscript icon for inline toolbar */
+[data-tool="superscript"] {
+  svg {
+    height: 15px;
+    width: 15px;
+    padding: 5px;
+  }
+
+  path {
+    stroke: initial;
+  }
 }
 
 a {
