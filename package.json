@@ -1,7 +1,7 @@
 {
   "name": "codex.docs",
   "license": "Apache-2.0",
-  "version": "v2.2.0-rc.17",
+  "version": "v2.2.0-rc.18",
   "type": "module",
   "bin": {
     "codex.docs": "dist/backend/app.js"
@@ -110,6 +110,7 @@
     "cssnano": "^5.1.0",
     "editorjs-drag-drop": "^1.1.13",
     "editorjs-superscript": "^1.0.0",
+    "editorjs-toggle-block": "^0.3.14",
     "editorjs-undo": "^2.0.26",
     "eslint": "^8.24.0",
     "eslint-config-codex": "^1.7.0",

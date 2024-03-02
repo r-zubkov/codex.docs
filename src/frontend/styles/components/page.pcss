@@ -514,3 +514,30 @@
     }
   }
 }
+
+.block-toggle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  svg {
+    width: 16px;
+    margin-right: 4px;
+    transition: all 0.1s ease 0s;
+  }
+
+  &__item {
+    margin-left: 20px;
+
+    @media (--mobile) {
+      margin-left: 0px;
+    }
+  }
+
+  &--open {
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+}

@@ -10,6 +10,7 @@ export default class Page {
    */
   constructor() {
     this.codeStyler = null;
+    this.toggleableBlock = null;
     this.tableOfContent = null;
   }
 
@@ -30,6 +31,7 @@ export default class Page {
    * Called by ModuleDispatcher to initialize module from DOM
    */
   init() {
+    this.toggleableBlock = this.createToggleableBlock();
     this.codeStyler = this.createCodeStyling();
     this.tableOfContent = this.createTableOfContent();
 
@@ -43,6 +45,22 @@ export default class Page {
         this.handleCopyButtonClickEvent(event);
       }
     });
+  }
+
+  /**
+   * Init toggleable blocks
+   */
+  async createToggleableBlock() {
+    const { default: ToggleableBlock } = await import(/* webpackChunkName: "toggleable-block" */ './../classes/toggleableBlock');
+
+    try {
+      // eslint-disable-next-line no-new
+      new ToggleableBlock({
+        selector: '.block-toggle',
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   /**
