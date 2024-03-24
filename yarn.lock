@@ -1950,6 +1950,13 @@
   dependencies:
     "@codexteam/icons" "^0.0.5"
 
+"@editorjs/quote@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.npmjs.org/@editorjs/quote/-/quote-2.6.0.tgz"
+  integrity sha512-8DiCMBT4n4UDV5bgzvfRH26HmL6YWddGC4+twvjhR+PzX0gwrnY8nFifvro79EeSqxwRtFjjlGnu5I0VTfw5aQ==
+  dependencies:
+    "@codexteam/icons" "^0.0.5"
+
 "@editorjs/raw@^2.5.0":
   version "2.5.0"
   resolved "https://registry.npmjs.org/@editorjs/raw/-/raw-2.5.0.tgz"

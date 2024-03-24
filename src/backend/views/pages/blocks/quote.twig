@@ -1,0 +1,16 @@
+{% set classes = ['block-quote'] %}
+
+{% if alignment == 'center' %}
+  {% set classes = classes|merge(['block-quote--centered']) %}
+{% endif %}
+
+<blockquote class="{{ classes.join(' ') }}">
+  <p class="block-quote__text">
+    {{ text }}
+  </p>
+  {% if caption is not empty %}
+    <footer class="block-quote__caption">
+      {{ caption }}
+    </footer>
+  {% endif %}
+</blockquote>

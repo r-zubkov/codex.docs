@@ -22,7 +22,7 @@
     "test:js": "cross-env NODE_ENV=testing mocha --recursive ./dist/test --exit",
     "test": "cross-env NODE_ENV=testing ts-mocha -n loader=ts-node/esm ./src/test/*.ts ./src/test/**/*.ts --exit ",
     "lint": "eslint --fix --ext .ts ./src/backend",
-    "editor-upgrade": "npm i @editorjs/editorjs@latest @editorjs/header@latest @editorjs/code@latest @editorjs/delimiter@latest @editorjs/list@latest @editorjs/link@latest @editorjs/image@latest @editorjs/table@latest @editorjs/inline-code@latest @editorjs/marker@latest @editorjs/warning@latest @editorjs/checklist@latest @editorjs/raw@latest"
+    "editor-upgrade": "npm i @editorjs/editorjs@latest @editorjs/header@latest @editorjs/code@latest @editorjs/delimiter@latest @editorjs/list@latest @editorjs/link@latest @editorjs/image@latest @editorjs/table@latest @editorjs/inline-code@latest @editorjs/marker@latest @editorjs/quote@latest @editorjs/warning@latest @editorjs/checklist@latest @editorjs/raw@latest"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.181.0",
@@ -71,6 +71,7 @@
     "@editorjs/link": "^2.6.2",
     "@editorjs/list": "^1.9.0",
     "@editorjs/marker": "^1.4.0",
+    "@editorjs/quote": "^2.6.0",
     "@editorjs/raw": "^2.5.0",
     "@editorjs/table": "^2.3.0",
     "@editorjs/warning": "^1.4.0",
