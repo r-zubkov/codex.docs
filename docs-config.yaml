@@ -16,6 +16,7 @@ uploads:
     secretAccessKey: "my-secret-key"
 frontend:
   isPrivate: false
+  isUseSocksProxy: false
   appName: "docs"
   basePath: "/docs"
   title: "Docs"
@@ -36,3 +37,10 @@ database:
     path: ./db
   # mongodb:
   #   uri: mongodb://localhost:27017/docs
+
+# socksProxy:
+#   ip: ""
+#   port: ""
+#   user: ""
+#   password: ""
+#   whiteList: ['']

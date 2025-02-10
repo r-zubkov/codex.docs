@@ -77,6 +77,7 @@ const AuthConfig = z.object({
  */
 const FrontendConfig = z.object({
   isPrivate: z.boolean().default(false), // Show pages only in edit mode
+  isUseSocksProxy: z.boolean().default(false), // Use socks proxy
   appName: z.string(), // App name
   basePath: z.string(), // Base path for routing
   title: z.string(), // Title for pages
@@ -86,6 +87,17 @@ const FrontendConfig = z.object({
     z.string(),
     z.object({ title: z.string(), uri: z.string() })
   ])), // Menu for pages
+});
+
+/**
+ * Socks Proxy configuration
+ */
+const SocksProxyConfig = z.object({
+  ip: z.string(), // IP
+  port: z.string(), // Port
+  user: z.string(), // User
+  password: z.string(), // Password
+  whiteList: z.array(z.string()), // list of urls that will skip proxy
 });
 
 /**
@@ -113,6 +125,7 @@ const AppConfig = z.object({
   frontend: FrontendConfig, // Frontend configuration
   auth: AuthConfig, // Auth configuration
   database: z.union([LocalDatabaseConfig, MongoDatabaseConfig]), // Database configuration
+  socksProxy: SocksProxyConfig.optional(), // Socks Proxy configuration
   staticBuild: StaticBuildConfig.optional(), // Static build configuration
 });
 
@@ -129,6 +142,7 @@ const defaultConfig: AppConfig = {
   },
   'frontend': {
     'isPrivate': false, 
+    'isUseSocksProxy': false,
     'appName': 'docs',  
     'basePath': '/docs',
     'title': 'Docs',
