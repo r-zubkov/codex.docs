@@ -1,24 +1,22 @@
-# CodeX Docs
+# CodeX Docs (Fork)
 
-[CodeX Docs](https://docs.codex.so/) is a free docs application. It's based on Editor.js ecosystem which gives all modern opportunities for working with content.
+[CodeX Docs](https://docs.codex.so/) is a documentation app built on the Editor.js ecosystem.
 
-You can use it for product documentation, for internal team docs, for personal notes or any other need.
+This repository is an independent fork focused on project-specific improvements.
 
 ![page-overview-bright](https://user-images.githubusercontent.com/3684889/190149130-6a6fcdec-09bc-4f96-8bdc-5ff4d789f248.png)
 
-It's super easy to install and use.
-
 ## Fork Notice
 
-This repository is a fork of the original [CodeX Docs](https://github.com/codex-team/codex.docs).
-
-It keeps the original product idea and architecture, with additional project-specific improvements.
+This project is forked from the original [codex-team/codex.docs](https://github.com/codex-team/codex.docs).
 
 Main fork differences:
 
 - Extended Editor.js stack and rendering with extra tools/plugins, including `@editorjs/quote`, `editorjs-toggle-block`, and `editorjs-superscript`
 - Added support for deployment under sub-URL (for example `/docs`) via `frontend.basePath`, including routes, assets, auth redirects and API endpoints
 - Added optional SOCKS proxy support for external links metadata fetching (`frontend.isUseSocksProxy` + `socksProxy` with whitelist support)
+- Increased backend payload limits for JSON and URL-encoded requests to `5mb`
+- Improved table of contents behavior and styles for long pages
 - Removed built-in analytics and error-report integrations in this fork
 
 Fork config example:
@@ -42,97 +40,87 @@ socksProxy:
 - 🤩 [Editor.js](https://editorjs.io/) ecosystem powered
 - ✍️ Rich writing toolkit: Quotes, Toggle blocks, Checklists, Tables, Embeds and more
 - 📂 Docs nesting — create any structure you need
-- 🧭 Automatic Table of contents for long pages
-- 📱 Nice look on Desktop and Mobile
-- 🔥 Beautiful page URLs. Human-readable and SEO-friendly.
+- 🧭 Automatic table of contents for long pages
+- 📱 Nice look on desktop and mobile
+- 🔥 Beautiful page URLs. Human-readable and SEO-friendly
 - 🚢 Deploy easily — local DB by default, no extra services required
-- 🗄️ MongoDB support when you need external database
+- 🗄️ MongoDB support when you need an external database
 - ☁️ Flexible uploads storage: local filesystem, static directory, or S3
-- 🧅 Optional SOCKS proxy for external links metadata fetching
-- 🤙 Simple configuration
-- ⚙️ Tune UI as you need. Collapse sections, hide the Sidebar
+- ⚙️ Tune UI as you need. Collapse sections, hide the sidebar
 
-## Demo
+## Prerequisites
 
-Here is our [Demo Application](https://docs-demo.codex.so/) where you can try CodeX Docs in action.
-
-## Guides
-
-1. [Getting Started](https://docs.codex.so/getting-started)
-2. [Configuration](https://docs.codex.so/configuration)
-3. [Kubernetes deployment](https://docs.codex.so/k8s-deployment)
-4. [Authentication](https://docs.codex.so/authentication)
-5. [Writing](https://docs.codex.so/writing)
-6. [Development guide](./DEVELOPMENT.md)
-7. [DB converter (local to MongoDB)](./bin/db-converter/README.md)
-8. [Contribution guide](https://docs.codex.so/contribution)
+- Node.js `16.14.0` (see `.nvmrc`)
+- Yarn `1.x`
+- Docker + Docker Compose (optional)
+- MongoDB (optional, only if `database.driver: mongodb`)
 
 ## Getting Started
 
-### 1. Clone the repo.
+### 1. Clone the repo
 
 ```shell
 git clone https://github.com/r-zubkov/codex.docs
+cd codex.docs
 ```
 
-### 2. Fill the config
-
-Read about available [configuration](https://docs.codex.so/configuration) options.
-
-For local overrides, create `docs-config.local.yaml`.
-
-### 3. Run the application
-
-#### Using Yarn
-
-```shell
-yarn && yarn start
-```
-
-#### For local development
+### 2. Install dependencies
 
 ```shell
 yarn install
+```
+
+### 3. Configure
+
+Use `docs-config.yaml` as the base config.
+
+Create `docs-config.local.yaml` for local overrides:
+
+```yaml
+auth:
+  password: "change-me"
+  secret: "change-me-too"
+```
+
+### 4. Run
+
+Development mode (backend with nodemon + frontend watch build):
+
+```shell
 yarn dev
 ```
 
-#### Using Docker
+Production-like local run:
 
+```shell
+yarn start
 ```
+
+Using Docker:
+
+```shell
 docker-compose build
 docker-compose up
 ```
 
-#### Using Kubernetes
+Using Kubernetes:
 
-We have the ready-to-use [Helm chart](https://github.com/codex-team/codex.docs.chart) to deploy project in Kubernetes
+Use the upstream Helm chart as a base:
+[codex-team/codex.docs.chart](https://github.com/codex-team/codex.docs.chart)
 
-## Development
+## Security Notes
 
-See documentation for developers in [DEVELOPMENT.md](./DEVELOPMENT.md).
+- Change default `auth.password` and `auth.secret` before any public deployment
+- Keep secrets and proxy credentials in local/private config files, do not commit them
+- Enable `frontend.isPrivate: true` if documentation must not be publicly readable
 
-## Optional SOCKS Proxy for Link Metadata
+## Guides
 
-CodeX Docs can fetch external links metadata through SOCKS proxy.
+- [Development guide](./DEVELOPMENT.md)
+- [DB converter (local to MongoDB)](./bin/db-converter/README.md)
+- Upstream docs reference: [docs.codex.so](https://docs.codex.so/)
 
-```yaml
-frontend:
-  isUseSocksProxy: true
+## Credits
 
-socksProxy:
-  ip: "127.0.0.1"
-  port: "9050"
-  user: ""
-  password: ""
-  whiteList: ["docs.codex.so"]
-```
-
-# About CodeX
-
-<img align="right" width="120" height="120" src="https://codex.so/public/app/img/codex-logo.svg" hspace="50">
-
-CodeX is a team of digital specialists around the world interested in building high-quality open source products on a global market. We are [open](https://codex.so/join) for young people who want to constantly improve their skills and grow professionally with experiments in cutting-edge technologies.
-
-| 🌐                           | Join 👋                                | Twitter                                      | Instagram                                      |
-| ---------------------------- | -------------------------------------- | -------------------------------------------- | ---------------------------------------------- |
-| [codex.so](https://codex.so) | [codex.so/join](https://codex.so/join) | [@codex_team](http://twitter.com/codex_team) | [@codex_team](http://instagram.com/codex_team) |
+- Original project: [CodeX Docs by CodeX Team](https://github.com/codex-team/codex.docs)
+- This fork is maintained independently and is not an official CodeX Team repository
