@@ -14,9 +14,8 @@ Main fork differences:
 
 - Extended Editor.js stack and rendering with extra tools/plugins, including `@editorjs/quote`, `editorjs-toggle-block`, and `editorjs-superscript`
 - Added support for deployment under sub-URL (for example `/docs`) via `frontend.basePath`, including routes, assets, auth redirects and API endpoints
+- Added private mode for full read access protection (`frontend.isPrivate: true`) with password-based authentication
 - Added optional SOCKS proxy support for external links metadata fetching (`frontend.isUseSocksProxy` + `socksProxy` with whitelist support)
-- Increased backend payload limits for JSON and URL-encoded requests to `5mb`
-- Improved table of contents behavior and styles for long pages
 - Removed built-in analytics and error-report integrations in this fork
 
 Fork config example:
@@ -25,7 +24,12 @@ Fork config example:
 frontend:
   appName: "docs"
   basePath: "/docs" # Deploy app under sub-URL, for example https://example.com/docs
+  isPrivate: true # Hide all pages behind authentication
   isUseSocksProxy: true # Enable SOCKS proxy for external link metadata
+
+auth:
+  password: "strong-password" # Required for login in private mode
+  secret: "strong-secret"
 
 socksProxy:
   ip: "127.0.0.1"
@@ -43,6 +47,7 @@ socksProxy:
 - 🧭 Automatic table of contents for long pages
 - 📱 Nice look on desktop and mobile
 - 🔥 Beautiful page URLs. Human-readable and SEO-friendly
+- 🔒 Private mode: hide docs behind password-based login
 - 🚢 Deploy easily — local DB by default, no extra services required
 - 🗄️ MongoDB support when you need an external database
 - ☁️ Flexible uploads storage: local filesystem, static directory, or S3
@@ -113,6 +118,18 @@ Use the upstream Helm chart as a base:
 - Change default `auth.password` and `auth.secret` before any public deployment
 - Keep secrets and proxy credentials in local/private config files, do not commit them
 - Enable `frontend.isPrivate: true` if documentation must not be publicly readable
+- In private mode, users cannot open pages without successful password login
+
+Private mode example:
+
+```yaml
+frontend:
+  isPrivate: true # Require auth even for page viewing
+
+auth:
+  password: "strong-password" # If password is not set, access will not be granted
+  secret: "strong-secret"
+```
 
 ## Guides
 
