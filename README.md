@@ -8,13 +8,47 @@ You can use it for product documentation, for internal team docs, for personal n
 
 It's super easy to install and use.
 
+## Fork Notice
+
+This repository is a fork of the original [CodeX Docs](https://github.com/codex-team/codex.docs).
+
+It keeps the original product idea and architecture, with additional project-specific improvements.
+
+Main fork differences:
+
+- Extended Editor.js stack and rendering with extra tools/plugins, including `@editorjs/quote`, `editorjs-toggle-block`, and `editorjs-superscript`
+- Added support for deployment under sub-URL (for example `/docs`) via `frontend.basePath`, including routes, assets, auth redirects and API endpoints
+- Added optional SOCKS proxy support for external links metadata fetching (`frontend.isUseSocksProxy` + `socksProxy` with whitelist support)
+- Removed built-in analytics and error-report integrations in this fork
+
+Fork config example:
+
+```yaml
+frontend:
+  appName: "docs"
+  basePath: "/docs" # Deploy app under sub-URL, for example https://example.com/docs
+  isUseSocksProxy: true # Enable SOCKS proxy for external link metadata
+
+socksProxy:
+  ip: "127.0.0.1"
+  port: "9050"
+  user: ""
+  password: ""
+  whiteList: ["docs.codex.so"] # URLs from this list are requested without proxy
+```
+
 ## Features
 
 - 🤩 [Editor.js](https://editorjs.io/) ecosystem powered
+- ✍️ Rich writing toolkit: Quotes, Toggle blocks, Checklists, Tables, Embeds and more
 - 📂 Docs nesting — create any structure you need
+- 🧭 Automatic Table of contents for long pages
 - 📱 Nice look on Desktop and Mobile
 - 🔥 Beautiful page URLs. Human-readable and SEO-friendly.
-- 🚢 Deploy easily — no DB and other deps required
+- 🚢 Deploy easily — local DB by default, no extra services required
+- 🗄️ MongoDB support when you need external database
+- ☁️ Flexible uploads storage: local filesystem, static directory, or S3
+- 🧅 Optional SOCKS proxy for external links metadata fetching
 - 🤙 Simple configuration
 - ⚙️ Tune UI as you need. Collapse sections, hide the Sidebar
 
@@ -29,20 +63,23 @@ Here is our [Demo Application](https://docs-demo.codex.so/) where you can try Co
 3. [Kubernetes deployment](https://docs.codex.so/k8s-deployment)
 4. [Authentication](https://docs.codex.so/authentication)
 5. [Writing](https://docs.codex.so/writing)
-6. [How to enable analytics](https://docs.codex.so/yandex-metrica)
-7. [Contribution guide](https://docs.codex.so/contribution)
+6. [Development guide](./DEVELOPMENT.md)
+7. [DB converter (local to MongoDB)](./bin/db-converter/README.md)
+8. [Contribution guide](https://docs.codex.so/contribution)
 
 ## Getting Started
 
 ### 1. Clone the repo.
 
 ```shell
-git clone https://github.com/codex-team/codex.docs
+git clone https://github.com/r-zubkov/codex.docs
 ```
 
 ### 2. Fill the config
 
 Read about available [configuration](https://docs.codex.so/configuration) options.
+
+For local overrides, create `docs-config.local.yaml`.
 
 ### 3. Run the application
 
@@ -50,6 +87,13 @@ Read about available [configuration](https://docs.codex.so/configuration) option
 
 ```shell
 yarn && yarn start
+```
+
+#### For local development
+
+```shell
+yarn install
+yarn dev
 ```
 
 #### Using Docker
@@ -66,6 +110,22 @@ We have the ready-to-use [Helm chart](https://github.com/codex-team/codex.docs.c
 ## Development
 
 See documentation for developers in [DEVELOPMENT.md](./DEVELOPMENT.md).
+
+## Optional SOCKS Proxy for Link Metadata
+
+CodeX Docs can fetch external links metadata through SOCKS proxy.
+
+```yaml
+frontend:
+  isUseSocksProxy: true
+
+socksProxy:
+  ip: "127.0.0.1"
+  port: "9050"
+  user: ""
+  password: ""
+  whiteList: ["docs.codex.so"]
+```
 
 # About CodeX
 
