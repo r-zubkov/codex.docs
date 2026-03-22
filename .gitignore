@@ -88,3 +88,7 @@ static-build
 
 # local configs
 frontend-config.js
+
+# local notes
+/AGENTS.md
+/ARCHITECTURE.md
