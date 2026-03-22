@@ -9,7 +9,6 @@ import '../styles/main.pcss';
  * @author CodeX
  */
 import ModuleDispatcher from 'module-dispatcher';
-import FrontendConfig from '../../../frontend-config';
 
 /**
  * Import modules
@@ -34,7 +33,6 @@ class Docs {
 
     document.addEventListener('DOMContentLoaded', () => {
       this.theme.init();
-      this.registerServiceWorker();
       this.docReady();
     });
 
@@ -50,25 +48,6 @@ class Docs {
     });
   }
 
-  /**
-   * Registers service worker
-   */
-  registerServiceWorker() {
-    if (!('serviceWorker' in navigator)) {
-      return;
-    }
-
-    const normalizedBasePath = FrontendConfig.basePath === '/'
-      ? ''
-      : FrontendConfig.basePath.replace(/\/$/, '');
-    const serviceWorkerUrl = `${normalizedBasePath}/sw.js` || '/sw.js';
-    const scope = `${normalizedBasePath || ''}/`;
-
-    navigator.serviceWorker.register(serviceWorkerUrl, { scope })
-      .catch((error) => {
-        console.error('Service worker registration failed:', error);
-      });
-  }
 }
 
 export default new Docs();
