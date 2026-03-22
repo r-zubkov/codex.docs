@@ -81,6 +81,12 @@
 
   .inline-code {
     @apply  --text-inline-code;
+    display: inline;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   .tc-table {

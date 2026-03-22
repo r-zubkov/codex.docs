@@ -69,6 +69,12 @@
   .inline-code,
   .block-header a .inline-code {
     @apply --text-inline-code;
+    display: inline;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   &__content {
