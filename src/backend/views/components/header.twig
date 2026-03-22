@@ -11,13 +11,24 @@
         {% include 'components/button.twig' with {icon: 'plus', size: 'small', url: config.basePath ~ '/page/new'} %}
       </li>
     {% endif %}
+    <li>
+      <button
+        type="button"
+        class="docs-header__menu-link docs-header__theme-toggle"
+        data-theme-toggle
+        aria-label="Switch color theme"
+        title="Switch color theme"
+      >
+        Auto
+      </button>
+    </li>
     {% for option in config.menu %}
       <li>
         <a class="docs-header__menu-link"
           {% if option.uri %}
             href="{{ option.uri }}"
           {% else %}
-            href="/page/{{ option._id }}"
+            href="{{ config.basePath ~ '/page/' ~ option._id }}"
           {% endif %}>
           {{ option.title | striptags }}
         </a>

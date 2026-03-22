@@ -13,7 +13,7 @@ html {
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--color-surface-header);
   z-index: 10;
 
   @media (--not-mobile){
@@ -21,7 +21,8 @@ html {
   }
 
   &__menu-link,
-  &__logo {
+  &__logo,
+  &__theme-toggle {
     display: inline-block;
     text-decoration: none;
     align-self: center;
@@ -45,6 +46,21 @@ html {
 
     &:hover {
       background-color: var(--color-link-hover);
+    }
+  }
+
+  &__theme-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 4px 10px;
+    @apply --squircle;
+
+    @media (--mobile) {
+      padding: 0;
+      line-height: inherit;
     }
   }
 

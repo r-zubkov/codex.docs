@@ -14,9 +14,18 @@
 @import './components/navigator.pcss';
 @import './components/table-of-content.pcss';
 
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
 body {
   font-family: system-ui, Helvetica, Arial, Verdana;
   color: var(--color-text-main);
+  background: var(--color-surface-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -13,6 +13,7 @@ import fse from 'fs-extra';
 import appConfig  from './utils/appConfig.js';
 import Aliases from './controllers/aliases.js';
 import Pages from './controllers/pages.js';
+import { writeStaticPwaFiles } from './utils/pwa.js';
 
 /**
  * Build static pages from database
@@ -131,6 +132,10 @@ export default async function buildStatic(): Promise<void> {
     console.log('Error while copying public directory');
     console.error(e);
   }
+
+  console.log('Write PWA files');
+  await writeStaticPwaFiles(distPath, appConfig.frontend);
+  console.log('PWA files written');
 
   if (appConfig.uploads.driver === 'local') {
     console.log('Copy uploads directory');

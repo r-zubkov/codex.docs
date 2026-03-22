@@ -1,0 +1,50 @@
+<meta name="theme-color" content="#ffffff" data-theme-color>
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="{{ config.basePath ~ '/manifest.webmanifest' }}">
+
+<script>
+  (function () {
+    var STORAGE_KEY = 'docs_theme_mode';
+    var MODE_SYSTEM = 'system';
+    var MODE_DARK = 'dark';
+    var MODE_LIGHT = 'light';
+    var DARK_THEME_COLOR = '#0f1622';
+    var LIGHT_THEME_COLOR = '#ffffff';
+    var mode;
+
+    try {
+      mode = window.localStorage.getItem(STORAGE_KEY);
+    } catch (e) {
+      mode = null;
+    }
+
+    if (mode !== MODE_SYSTEM && mode !== MODE_DARK && mode !== MODE_LIGHT) {
+      mode = MODE_SYSTEM;
+    }
+
+    var prefersDark = false;
+
+    try {
+      prefersDark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    } catch (e) {
+      prefersDark = false;
+    }
+
+    var theme = mode === MODE_SYSTEM
+      ? (prefersDark ? MODE_DARK : MODE_LIGHT)
+      : mode;
+    var root = document.documentElement;
+
+    root.setAttribute('data-theme-mode', mode);
+    root.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
+
+    var themeColorMeta = document.querySelector('meta[name="theme-color"][data-theme-color]');
+
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', theme === MODE_DARK ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+    }
+  })();
+</script>
