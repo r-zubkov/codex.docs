@@ -8,8 +8,6 @@
     var MODE_LIGHT = 'light';
     var DARK_THEME_COLOR = '#0f1622';
     var LIGHT_THEME_COLOR = '#ffffff';
-    var MANIFEST_THEME_COLOR_PARAM = 'theme_color';
-    var MANIFEST_BACKGROUND_COLOR_PARAM = 'background_color';
     var mode;
 
     try {
@@ -44,23 +42,6 @@
 
     if (themeColorMeta) {
       themeColorMeta.setAttribute('content', themeColor);
-    }
-
-    var manifestLink = document.querySelector('link[rel="manifest"]');
-    var manifestBaseHref = manifestLink
-      ? manifestLink.getAttribute('data-manifest-base-href') || manifestLink.getAttribute('href')
-      : null;
-
-    if (manifestLink && manifestBaseHref) {
-      try {
-        var manifestUrl = new URL(manifestBaseHref, window.location.origin);
-
-        manifestUrl.searchParams.set(MANIFEST_THEME_COLOR_PARAM, themeColor);
-        manifestUrl.searchParams.set(MANIFEST_BACKGROUND_COLOR_PARAM, themeColor);
-        manifestLink.setAttribute('href', manifestUrl.toString());
-      } catch (e) {
-        // Ignore malformed manifest url
-      }
     }
   })();
 </script>

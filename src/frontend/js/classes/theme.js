@@ -16,8 +16,6 @@ const THEME_COLORS = {
   [MODE_LIGHT]: '#ffffff',
   [MODE_DARK]: '#0f1622',
 };
-const MANIFEST_THEME_COLOR_PARAM = 'theme_color';
-const MANIFEST_BACKGROUND_COLOR_PARAM = 'background_color';
 
 /**
  * Handles docs color theme state
@@ -104,7 +102,6 @@ export default class Theme {
     }
 
     this.updateThemeColorMeta(theme);
-    this.updateManifestColors(theme);
     this.updateToggleButtons();
     this.updateSystemThemeListener();
   }
@@ -217,37 +214,5 @@ export default class Theme {
     }
 
     themeColorMeta.setAttribute('content', THEME_COLORS[theme] || THEME_COLORS[MODE_LIGHT]);
-  }
-
-  /**
-   * Updates manifest link with current theme colors
-   *
-   * @param {string} theme
-   */
-  updateManifestColors(theme) {
-    const manifestLink = document.querySelector('link[rel="manifest"]');
-
-    if (!manifestLink) {
-      return;
-    }
-
-    const manifestBaseHref = manifestLink.getAttribute('data-manifest-base-href')
-      || manifestLink.getAttribute('href');
-
-    if (!manifestBaseHref) {
-      return;
-    }
-
-    const themeColor = THEME_COLORS[theme] || THEME_COLORS[MODE_LIGHT];
-
-    try {
-      const manifestUrl = new URL(manifestBaseHref, window.location.origin);
-
-      manifestUrl.searchParams.set(MANIFEST_THEME_COLOR_PARAM, themeColor);
-      manifestUrl.searchParams.set(MANIFEST_BACKGROUND_COLOR_PARAM, themeColor);
-      manifestLink.setAttribute('href', manifestUrl.toString());
-    } catch (e) {
-      // Manifest url is malformed
-    }
   }
 }
