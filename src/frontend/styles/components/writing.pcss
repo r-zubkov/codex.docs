@@ -215,6 +215,42 @@
     color: var(--color-link-active) !important;
   }
 
+  .ce-conversion-toolbar__label {
+    color: var(--color-text-second);
+  }
+
+  .ce-conversion-toolbar .ce-conversion-tool {
+    color: var(--color-text-main);
+  }
+
+  .ce-conversion-toolbar .ce-conversion-tool__icon {
+    background: var(--color-input-primary);
+    box-shadow: inset 0 0 0 1px var(--color-line-gray);
+  }
+
+  .ce-conversion-toolbar .ce-conversion-tool__secondary-label {
+    color: var(--color-text-second);
+  }
+
+  .ce-conversion-toolbar .ce-conversion-tool:hover,
+  .ce-conversion-toolbar .ce-conversion-tool--focused {
+    background: var(--color-link-hover) !important;
+    color: var(--color-text-main) !important;
+    box-shadow: none;
+  }
+
+  .ce-conversion-toolbar .ce-conversion-tool--active {
+    background: var(--color-link-hover) !important;
+    color: var(--color-link-active) !important;
+  }
+
+  .ce-conversion-toolbar .ce-conversion-tool--disabled,
+  .ce-conversion-toolbar .ce-conversion-tool[aria-disabled="true"] {
+    background: transparent !important;
+    color: var(--color-text-second) !important;
+    opacity: 0.6;
+  }
+
   .ce-popover__item:hover,
   .ce-popover__item--focused,
   .ce-settings__button:hover,
