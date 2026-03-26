@@ -196,6 +196,25 @@
     box-shadow: none;
   }
 
+  .ce-inline-toolbar .ce-inline-tool,
+  .ce-inline-toolbar .ce-inline-toolbar__dropdown {
+    color: var(--color-text-main);
+  }
+
+  .ce-inline-toolbar .ce-inline-toolbar__dropdown {
+    border-color: var(--color-line-gray);
+  }
+
+  .ce-inline-toolbar .ce-inline-tool:hover,
+  .ce-inline-toolbar .ce-inline-tool:focus,
+  .ce-inline-toolbar .ce-inline-tool--active,
+  .ce-inline-toolbar .ce-inline-tool--focused,
+  .ce-inline-toolbar .ce-inline-toolbar__dropdown:hover,
+  .ce-inline-toolbar .ce-inline-toolbar__dropdown--opened {
+    background: var(--color-link-hover) !important;
+    color: var(--color-link-active) !important;
+  }
+
   .ce-popover__item:hover,
   .ce-popover__item--focused,
   .ce-settings__button:hover,
