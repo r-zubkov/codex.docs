@@ -130,6 +130,44 @@
 }
 
 :root[data-theme='dark'] {
+  .codex-editor {
+    --selectionColor: rgba(69, 118, 204, 0.36);
+    --inlineSelectionColor: rgba(69, 118, 204, 0.46);
+  }
+
+  .writing-editor .codex-editor ::selection {
+    background-color: #2f5ea8 !important;
+    color: #f4f8ff !important;
+  }
+
+  .writing-editor .codex-editor ::-moz-selection {
+    background-color: #2f5ea8 !important;
+    color: #f4f8ff !important;
+  }
+
+  .writing-editor .codex-editor [style*="background-color: rgb(168, 214, 255)"],
+  .writing-editor .codex-editor [style*="background-color: rgb(168,214,255)"],
+  .writing-editor .codex-editor [style*="background-color:rgb(168, 214, 255)"],
+  .writing-editor .codex-editor [style*="background-color:rgb(168,214,255)"],
+  .writing-editor .codex-editor [style*="background-color:#a8d6ff"],
+  .writing-editor .codex-editor [style*="background-color: #a8d6ff"],
+  .writing-editor .codex-editor [style*="background-color:#A8D6FF"],
+  .writing-editor .codex-editor [style*="background-color: #A8D6FF"] {
+    background-color: #2f5ea8 !important;
+    color: #f4f8ff !important;
+  }
+
+  .writing-editor .codex-editor [style*="background-color: rgb(168, 214, 255)"] *,
+  .writing-editor .codex-editor [style*="background-color: rgb(168,214,255)"] *,
+  .writing-editor .codex-editor [style*="background-color:rgb(168, 214, 255)"] *,
+  .writing-editor .codex-editor [style*="background-color:rgb(168,214,255)"] *,
+  .writing-editor .codex-editor [style*="background-color:#a8d6ff"] *,
+  .writing-editor .codex-editor [style*="background-color: #a8d6ff"] *,
+  .writing-editor .codex-editor [style*="background-color:#A8D6FF"] *,
+  .writing-editor .codex-editor [style*="background-color: #A8D6FF"] * {
+    color: #f4f8ff !important;
+  }
+
   .ce-popover {
     --color-border: var(--color-line-gray);
     --color-background: var(--color-surface-popover);

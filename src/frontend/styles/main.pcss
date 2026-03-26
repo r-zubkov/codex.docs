@@ -30,6 +30,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}
+
+::-moz-selection {
+  background: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}
+
 /* fill color for btn icons */
 .docs-button svg {
   fill: currentColor;
