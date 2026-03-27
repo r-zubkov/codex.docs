@@ -14,7 +14,7 @@ const MODE_LABELS = {
 
 const THEME_COLORS = {
   [MODE_LIGHT]: '#ffffff',
-  [MODE_DARK]: '#0f1622',
+  [MODE_DARK]: '#0f141e',
 };
 
 /**
