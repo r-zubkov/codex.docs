@@ -337,3 +337,27 @@
     }
   }
 }
+
+:root[data-theme='dark'] {
+  .docs-sidebar__content {
+    scrollbar-color: var(--color-scrollbar-thumb) var(--color-surface-body);
+  }
+
+  .docs-sidebar__content::-webkit-scrollbar-track {
+    background: var(--color-surface-body);
+  }
+
+  .docs-sidebar__content::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar-thumb);
+    border: 2px solid var(--color-surface-body);
+    border-radius: 8px;
+  }
+
+  .docs-sidebar__content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-scrollbar-thumb-hover);
+  }
+
+  .docs-sidebar__content::-webkit-scrollbar-corner {
+    background: var(--color-surface-body);
+  }
+}
