@@ -16,6 +16,7 @@ import ModuleDispatcher from 'module-dispatcher';
 import Writing from './modules/writing';
 import Page from './modules/page';
 import Sidebar from './modules/sidebar';
+import Theme from './classes/theme';
 
 /**
  * Main app class
@@ -28,8 +29,10 @@ class Docs {
     this.writing = new Writing();
     this.page = new Page();
     this.sidebar = new Sidebar();
+    this.theme = new Theme();
 
-    document.addEventListener('DOMContentLoaded', (event) => {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.theme.init();
       this.docReady();
     });
 
@@ -44,6 +47,7 @@ class Docs {
       Library: this,
     });
   }
+
 }
 
 export default new Docs();

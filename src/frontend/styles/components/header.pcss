@@ -4,7 +4,7 @@ html {
 
 .docs-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-shrink: 0;
   padding: 12px var(--layout-padding-horizontal);
   border-bottom: 1px solid var(--color-line-gray);
@@ -13,7 +13,7 @@ html {
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--color-surface-body);
   z-index: 10;
 
   @media (--not-mobile){
@@ -21,7 +21,8 @@ html {
   }
 
   &__menu-link,
-  &__logo {
+  &__logo,
+  &__theme-toggle {
     display: inline-block;
     text-decoration: none;
     align-self: center;
@@ -48,15 +49,62 @@ html {
     }
   }
 
+  &__theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin-left: 16px;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: background-color .13s;
+    @apply --squircle;
+
+    @media (--can-hover) {
+      &:hover {
+        background-color: var(--color-link-hover);
+      }
+    }
+
+    @media (--mobile) {
+      width: 28px;
+      height: 28px;
+      margin-left: 12px;
+    }
+  }
+
+  &__theme-toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+  }
+
   &__menu {
     display: flex;
     margin: 0;
+    margin-left: auto;
     gap: 10px;
     padding-left: 0;
     font-size: 16px;
 
     @media (--mobile) {
       margin-top: 6px;
+      margin-left: 0;
       flex-basis: 100%;
       font-size: 14px;
     }
