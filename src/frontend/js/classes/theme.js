@@ -12,6 +12,27 @@ const MODE_LABELS = {
   [MODE_LIGHT]: 'Light',
 };
 
+const MODE_ICONS = {
+  [MODE_SYSTEM]: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"></circle>
+      <path d="M12 4a8 8 0 0 1 0 16V4z" fill="currentColor"></path>
+    </svg>
+  `,
+  [MODE_DARK]: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 1 0 10.5 10.5z" fill="currentColor"></path>
+    </svg>
+  `,
+  [MODE_LIGHT]: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+      <path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  `,
+};
+
 const THEME_COLORS = {
   [MODE_LIGHT]: '#ffffff',
   [MODE_DARK]: '#0f141e',
@@ -153,11 +174,12 @@ export default class Theme {
    */
   updateToggleButtons() {
     const label = MODE_LABELS[this.mode] || MODE_LABELS[MODE_SYSTEM];
+    const icon = MODE_ICONS[this.mode] || MODE_ICONS[MODE_SYSTEM];
     const themeToggleText = `Theme: ${label}`;
     const themeToggleLabel = `Switch color theme. Current mode: ${label}`;
 
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-      button.textContent = themeToggleText;
+      button.innerHTML = `<span class="docs-header__theme-toggle-icon">${icon}</span>`;
       button.setAttribute('aria-label', themeToggleLabel);
       button.setAttribute('title', themeToggleText);
     });
