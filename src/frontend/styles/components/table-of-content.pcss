@@ -60,8 +60,9 @@
 
 :root[data-theme='dark'] {
   .table-of-content {
+    background-color: var(--color-surface-body);
     border-left-color: rgba(116, 177, 255, 0.22);
-    scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+    scrollbar-color: var(--color-scrollbar-thumb) var(--color-surface-body);
   }
 
   .table-of-content__header {
@@ -78,12 +79,12 @@
   }
 
   .table-of-content::-webkit-scrollbar-track {
-    background: var(--color-scrollbar-track);
+    background: var(--color-surface-body);
   }
 
   .table-of-content::-webkit-scrollbar-thumb {
     background: var(--color-scrollbar-thumb);
-    border: 2px solid var(--color-scrollbar-track);
+    border: 2px solid var(--color-surface-body);
     border-radius: 8px;
   }
 
@@ -92,6 +93,6 @@
   }
 
   .table-of-content::-webkit-scrollbar-corner {
-    background: var(--color-scrollbar-track);
+    background: var(--color-surface-body);
   }
 }
