@@ -200,6 +200,35 @@
     border-left: 1px solid var(--color-line-gray);
   }
 
+  .writing-editor .image-tool {
+    --bg-color: var(--color-input-primary);
+    --front-color: var(--color-link-active);
+    --border-color: var(--color-line-gray);
+  }
+
+  .writing-editor .image-tool .cdx-button {
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-line-gray);
+    color: var(--color-text-main);
+    box-shadow: none;
+  }
+
+  .writing-editor .image-tool .cdx-button:hover {
+    background: var(--color-link-hover);
+  }
+
+  .writing-editor .image-tool .cdx-button svg {
+    color: var(--color-text-second);
+  }
+
+  .writing-editor .image-tool--loading .image-tool__image {
+    background-color: var(--color-surface-elevated);
+  }
+
+  .writing-editor .image-tool__caption[contentEditable=true][data-placeholder]:before {
+    color: var(--color-text-second);
+  }
+
   .ce-popover {
     --color-border: var(--color-line-gray);
     --color-background: var(--color-surface-popover);
