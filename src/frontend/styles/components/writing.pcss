@@ -364,6 +364,12 @@
     color: var(--color-text-second) !important;
   }
 
+  .tc-wrap {
+    --color-background: var(--color-link-hover);
+    --color-border: var(--color-line-gray);
+    --color-text-secondary: var(--color-text-second);
+  }
+
   .tc-table,
   .tc-row,
   .tc-cell {
@@ -374,5 +380,11 @@
   .tc-add-row {
     background: var(--color-surface-popover);
     color: var(--color-text-main);
+  }
+
+  .tc-add-column:hover,
+  .tc-add-row:hover,
+  .tc-add-row:hover::before {
+    background: var(--color-link-hover);
   }
 }
