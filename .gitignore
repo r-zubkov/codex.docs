@@ -81,6 +81,8 @@ db/
 # Compiled files
 /dist/*
 /public/dist/*
+/public/*
+!/public/favicon*
 
 *.local.yaml
 
