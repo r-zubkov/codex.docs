@@ -15,6 +15,7 @@ Main fork differences:
 - Extended Editor.js stack and rendering with extra tools/plugins, including `@editorjs/quote`, `editorjs-toggle-block`, and `editorjs-superscript`
 - Added support for deployment under sub-URL (for example `/docs`) via `frontend.basePath`, including routes, assets, auth redirects and API endpoints
 - Added private mode for full read access protection (`frontend.isPrivate: true`) with password-based authentication
+- Added built-in color theme modes (`system`, `dark`, `light`) with a header toggle and saved preference
 - Added optional SOCKS proxy support for external links metadata fetching (`frontend.isUseSocksProxy` + `socksProxy` with whitelist support)
 - Removed built-in analytics and error-report integrations in this fork
 
@@ -52,6 +53,7 @@ socksProxy:
 - 🗄️ MongoDB support when you need an external database
 - ☁️ Flexible uploads storage: local filesystem, static directory, or S3
 - ⚙️ Tune UI as you need. Collapse sections, hide the sidebar
+- 🌗 Theme modes: System, Dark, and Light with a quick toggle
 
 ## Prerequisites
 
