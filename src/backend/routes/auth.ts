@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import csrf from 'csurf';
 import appConfig from '../utils/appConfig.js';
@@ -6,6 +6,11 @@ import appConfig from '../utils/appConfig.js';
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 const parseForm = express.urlencoded({ extended: false });
+
+router.use((req: Request, res: Response, next: NextFunction) => {
+  res.locals.menu = [];
+  next();
+});
 
 /**
  * Authorization page

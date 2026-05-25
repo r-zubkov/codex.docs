@@ -10,10 +10,10 @@ import { allowEdit, allowView } from './middlewares/locals.js';
 
 const router = express.Router();
 
-router.use('/', pagesMiddleware, home);
-router.use('/', pagesMiddleware, pages);
-router.use('/', pagesMiddleware, auth);
 router.use('/api', verifyToken, allowEdit, api);
-router.use('/', verifyToken, allowView, aliases);
+router.use('/', auth);
+router.use('/', home);
+router.use('/page', verifyToken, allowView, pagesMiddleware, pages);
+router.use('/', verifyToken, allowView, pagesMiddleware, aliases);
 
 export default router;

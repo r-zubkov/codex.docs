@@ -14,6 +14,12 @@ import { createMenuTree } from '../../utils/menu.js';
  * @param {NextFunction} next
  */
 export default asyncMiddleware(async (req: Request, res: Response, next: NextFunction) => {
+  if (req.method !== 'GET' || res.locals.menu) {
+    next();
+
+    return;
+  }
+
   /**
    * Pages without parent
    *
@@ -22,7 +28,7 @@ export default asyncMiddleware(async (req: Request, res: Response, next: NextFun
   const parentIdOfRootPages = '0' as EntityId;
 
   try {
-    const pages = await Pages.getAllPages();
+    const pages = await Pages.getNavigationPages();
     const pagesOrder = await PagesOrder.getAll();
 
     res.locals.menu = createMenuTree(parentIdOfRootPages, pages, pagesOrder, 2);

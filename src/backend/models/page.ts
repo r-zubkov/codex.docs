@@ -1,5 +1,5 @@
 import urlify from '../utils/urlify.js';
-import database, {isEqualIds} from '../database/index.js';
+import database, { isEqualIds } from '../database/index.js';
 import { EntityId } from '../database/types.js';
 
 const pagesDb = database['pages'];
@@ -17,6 +17,13 @@ export interface PageData {
   title?: string;
   uri?: string;
   body?: any;
+  parent?: EntityId;
+}
+
+export interface PageNavigationData {
+  _id?: EntityId;
+  title?: string;
+  uri?: string;
   parent?: EntityId;
 }
 
@@ -89,16 +96,36 @@ class Page {
   }
 
   /**
+   * Find page data needed for navigation without loading page bodies
+   *
+   * @param {object} query - input query
+   * @returns {Promise<PageNavigationData[]>}
+   */
+  public static async getNavigationData(query: Record<string, unknown> = {}): Promise<PageNavigationData[]> {
+    const docs = await pagesDb.find(query, { body: 0 } as unknown as PageData);
+
+    return docs.map(doc => ({
+      _id: doc._id,
+      title: doc.title || '',
+      uri: doc.uri || '',
+      parent: doc.parent || '0' as EntityId,
+    }));
+  }
+
+  /**
    * Set PageData object fields to internal model fields
    *
    * @param {PageData} pageData - page's data
    */
   public set data(pageData: PageData) {
-    const { body, parent, uri } = pageData;
+    const { body, parent, title, uri } = pageData;
 
-    this.body = body || this.body;
-    this.title = this.extractTitleFromBody();
-    this.uri = uri || '';
+    if (body !== undefined) {
+      this.body = body;
+    }
+
+    this.title = this.body ? this.extractTitleFromBody() : title || this.title || '';
+    this.uri = uri !== undefined ? uri : this.uri || '';
     this._parent = parent || this._parent || '0' as EntityId;
   }
 
