@@ -96,6 +96,18 @@ class Page {
   }
 
   /**
+   * Find all pages without page bodies for navigation/order UI.
+   *
+   * @param {object} query - input query
+   * @returns {Promise<Page[]>}
+   */
+  public static async getAllWithoutBody(query: Record<string, unknown> = {}): Promise<Page[]> {
+    const docs = await pagesDb.find(query, { body: 0 } as unknown as PageData);
+
+    return docs.map(doc => new Page(doc));
+  }
+
+  /**
    * Find page data needed for navigation without loading page bodies
    *
    * @param {object} query - input query

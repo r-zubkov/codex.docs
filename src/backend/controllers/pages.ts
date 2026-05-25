@@ -61,7 +61,7 @@ class Pages {
    * @returns {Promise<Page[]>}
    */
   public static async getAllExceptChildren(parent: EntityId): Promise<Page[]> {
-    const pagesAvailable = this.removeChildren(await Pages.getAllPages(), parent);
+    const pagesAvailable = this.removeChildren(await Page.getAllWithoutBody(), parent);
 
     const nullFilteredPages: Page[] = [];
 
@@ -255,7 +255,7 @@ class Pages {
    * Helper to get all pages as map
    */
   private static async getPagesMap(): Promise<Map<string, Page>> {
-    const pages = await Pages.getAllPages();
+    const pages = await Page.getAllWithoutBody();
     const pagesMap = new Map<string, Page>();
 
     pages.forEach(page => {
