@@ -14,7 +14,7 @@ import { createMenuTree } from '../../utils/menu.js';
  * @param {NextFunction} next
  */
 export default asyncMiddleware(async (req: Request, res: Response, next: NextFunction) => {
-  if (req.method !== 'GET' || res.locals.menu) {
+  if (req.method !== 'GET' || res.locals.menuLoaded) {
     next();
 
     return;
@@ -32,6 +32,7 @@ export default asyncMiddleware(async (req: Request, res: Response, next: NextFun
     const pagesOrder = await PagesOrder.getAll();
 
     res.locals.menu = createMenuTree(parentIdOfRootPages, pages, pagesOrder, 2);
+    res.locals.menuLoaded = true;
   } catch (error) {
     console.log('Can not load menu:', error);
   }
