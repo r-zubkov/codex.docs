@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html{% if theme is defined and theme %} data-theme-mode="{{ theme.mode }}" data-theme="{{ theme.name }}"{% endif %} style="height: 100%;{% if theme is defined and theme %} background-color: {{ theme.color }}; color-scheme: {{ theme.name }};{% endif %}">
+{% set initialTheme = theme is defined and theme ? theme : { mode: 'system', name: 'dark', color: '#0f141e' } %}
+<html data-theme-mode="{{ initialTheme.mode }}" data-theme="{{ initialTheme.name }}" style="height: 100%; background-color: {{ initialTheme.color }}; color-scheme: {{ initialTheme.name }};">
 <head>
   <title>{{ config.title }}</title>
   {% include "../components/theme-head.twig" %}
