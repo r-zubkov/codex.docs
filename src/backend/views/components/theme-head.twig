@@ -1,24 +1,25 @@
+{% set initialTheme = theme is defined and theme ? theme : { mode: 'system', name: 'dark', color: '#0f141e' } %}
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="{% if theme is defined and theme.color %}{{ theme.color }}{% else %}#ffffff{% endif %}">
+<meta name="theme-color" content="{{ initialTheme.color }}">
 
 <style>
   html {
+    background-color: #0f141e;
+    color-scheme: dark;
+  }
+
+  html[data-theme='light'] {
     background-color: #ffffff;
+    color-scheme: light;
   }
 
   html[data-theme='dark'] {
     background-color: #0f141e;
+    color-scheme: dark;
   }
 
   body {
     background-color: inherit;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    html:not([data-theme]) {
-      background-color: #0f141e;
-      color-scheme: dark;
-    }
   }
 </style>
 
