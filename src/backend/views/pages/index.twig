@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="height: 100%">
+<html{% if theme is defined and theme %} data-theme-mode="{{ theme.mode }}" data-theme="{{ theme.name }}"{% endif %} style="height: 100%;{% if theme is defined and theme %} background-color: {{ theme.color }}; color-scheme: {{ theme.name }};{% endif %}">
 <head>
   <title>{{ config.title }}</title>
   {% include "../components/theme-head.twig" %}

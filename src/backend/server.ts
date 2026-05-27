@@ -15,6 +15,7 @@
  import cookieParser from 'cookie-parser';
  import routes from './routes/index.js';
  import HttpException from './exceptions/httpException.js';
+ import setThemeLocals from './routes/middlewares/theme.js';
  
  const debug = Debug.debug('codex.docs:server');
  
@@ -83,6 +84,7 @@
  
    app.use('/favicon', express.static(downloadedFaviconFolder));
  
+   app.use(setThemeLocals);
    app.use(appConfig.frontend.basePath, routes);
  
  
