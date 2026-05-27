@@ -1,6 +1,7 @@
 import { Storage } from '../utils/storage';
 
 const STORAGE_KEY = 'docs_theme_mode';
+const COOKIE_MAX_AGE = 31536000;
 const MODE_SYSTEM = 'system';
 const MODE_DARK = 'dark';
 const MODE_LIGHT = 'light';
@@ -77,7 +78,13 @@ export default class Theme {
         return value;
       }
     } catch (e) {
-      return MODE_SYSTEM;
+      // localStorage is not available
+    }
+
+    const rootMode = document.documentElement.getAttribute('data-theme-mode');
+
+    if (MODE_ORDER.includes(rootMode)) {
+      return rootMode;
     }
 
     return MODE_SYSTEM;
@@ -117,6 +124,7 @@ export default class Theme {
     root.setAttribute('data-theme-mode', this.mode);
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
+    root.style.backgroundColor = THEME_COLORS[theme] || THEME_COLORS[MODE_LIGHT];
 
     if (persist) {
       this.saveMode(this.mode);
@@ -137,6 +145,24 @@ export default class Theme {
       this.storage.set(mode);
     } catch (e) {
       // localStorage is not available
+    }
+
+    this.saveModeCookie(mode);
+  }
+
+  /**
+   * Saves selected mode to a cookie so SSR can avoid a white flash
+   *
+   * @param {string} mode
+   */
+  saveModeCookie(mode) {
+    try {
+      const config = window.CodeXDocsTheme || {};
+      const cookiePath = config.cookiePath || '/';
+
+      document.cookie = `${STORAGE_KEY}=${encodeURIComponent(mode)}; Max-Age=${COOKIE_MAX_AGE}; Path=${cookiePath}; SameSite=Lax`;
+    } catch (e) {
+      // Cookies are not available
     }
   }
 

@@ -1,19 +1,48 @@
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="{% if theme is defined and theme.color %}{{ theme.color }}{% else %}#ffffff{% endif %}">
+
+<style>
+  html {
+    background-color: #ffffff;
+  }
+
+  html[data-theme='dark'] {
+    background-color: #0f141e;
+  }
+
+  body {
+    background-color: inherit;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme]) {
+      background-color: #0f141e;
+      color-scheme: dark;
+    }
+  }
+</style>
 
 <script>
   (function () {
     var STORAGE_KEY = 'docs_theme_mode';
+    var COOKIE_MAX_AGE = 31536000;
+    var COOKIE_PATH = {{ config.basePath | json_stringify }} || '/';
     var MODE_SYSTEM = 'system';
     var MODE_DARK = 'dark';
     var MODE_LIGHT = 'light';
     var DARK_THEME_COLOR = '#0f141e';
     var LIGHT_THEME_COLOR = '#ffffff';
+    var root = document.documentElement;
     var mode;
 
     try {
       mode = window.localStorage.getItem(STORAGE_KEY);
     } catch (e) {
       mode = null;
+    }
+
+    if (mode !== MODE_SYSTEM && mode !== MODE_DARK && mode !== MODE_LIGHT) {
+      mode = root.getAttribute('data-theme-mode');
     }
 
     if (mode !== MODE_SYSTEM && mode !== MODE_DARK && mode !== MODE_LIGHT) {
@@ -32,16 +61,35 @@
       ? (prefersDark ? MODE_DARK : MODE_LIGHT)
       : mode;
     var themeColor = theme === MODE_DARK ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
-    var root = document.documentElement;
+
+    window.CodeXDocsTheme = {
+      cookiePath: COOKIE_PATH,
+    };
 
     root.setAttribute('data-theme-mode', mode);
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
+    root.style.backgroundColor = themeColor;
 
     var themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
     if (themeColorMeta) {
       themeColorMeta.setAttribute('content', themeColor);
+    }
+
+    try {
+      window.localStorage.setItem(STORAGE_KEY, mode);
+    } catch (e) {
+      // localStorage is not available
+    }
+
+    try {
+      document.cookie = STORAGE_KEY + '=' + encodeURIComponent(mode) +
+        '; Max-Age=' + COOKIE_MAX_AGE +
+        '; Path=' + COOKIE_PATH +
+        '; SameSite=Lax';
+    } catch (e) {
+      // Cookies are not available
     }
   })();
 </script>

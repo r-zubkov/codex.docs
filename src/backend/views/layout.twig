@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html{% if theme is defined and theme %} data-theme-mode="{{ theme.mode }}" data-theme="{{ theme.name }}" style="background-color: {{ theme.color }}; color-scheme: {{ theme.name }};"{% endif %}>
   <head>
     <title>{{ (page.title ?: config.title) | striptags }}</title>
     {% include "components/theme-head.twig" %}
