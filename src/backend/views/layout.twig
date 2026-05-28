@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% set initialTheme = theme is defined and theme ? theme : { mode: 'system', name: 'dark', color: '#0f141e' } %}
-<html data-theme-mode="{{ initialTheme.mode }}" data-theme="{{ initialTheme.name }}" style="background-color: {{ initialTheme.color }}; color-scheme: {{ initialTheme.name }};">
+<html data-theme-mode="{{ initialTheme.mode }}" data-theme="{{ initialTheme.name }}" style="--color-surface-body: {{ initialTheme.color }}; background-color: {{ initialTheme.color }}; color-scheme: {{ initialTheme.name }};">
   <head>
     <title>{{ (page.title ?: config.title) | striptags }}</title>
     {% include "components/theme-head.twig" %}
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="{{ favicon.type }}" href="{{ favicon.destination }}">
   </head>
-  <body>
+  <body style="background-color: var(--color-surface-body, {{ initialTheme.color }});">
     {% include "components/header.twig" with res.locals.isAuthorized %}
     <div class="docs">
 

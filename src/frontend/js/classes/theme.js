@@ -119,12 +119,14 @@ export default class Theme {
       : MODE_SYSTEM;
 
     const theme = this.resolveTheme(this.mode);
+    const themeColor = THEME_COLORS[theme] || THEME_COLORS[MODE_LIGHT];
     const root = document.documentElement;
 
     root.setAttribute('data-theme-mode', this.mode);
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
-    root.style.backgroundColor = THEME_COLORS[theme] || THEME_COLORS[MODE_LIGHT];
+    root.style.setProperty('--color-surface-body', themeColor);
+    root.style.backgroundColor = themeColor;
 
     if (persist) {
       this.saveMode(this.mode);
