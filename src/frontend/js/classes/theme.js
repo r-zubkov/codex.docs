@@ -1,6 +1,4 @@
-import { Storage } from '../utils/storage';
-
-const STORAGE_KEY = 'docs_theme_mode';
+const THEME_COOKIE_NAME = 'docs_theme_mode';
 const COOKIE_MAX_AGE = 31536000;
 const MODE_SYSTEM = 'system';
 const MODE_DARK = 'dark';
@@ -47,7 +45,6 @@ export default class Theme {
    * Creates instance
    */
   constructor() {
-    this.storage = new Storage(STORAGE_KEY);
     this.mode = MODE_SYSTEM;
     this.mediaQuery = window.matchMedia
       ? window.matchMedia('(prefers-color-scheme: dark)')
@@ -71,16 +68,6 @@ export default class Theme {
    * @returns {string}
    */
   getStoredMode() {
-    try {
-      const value = this.storage.get();
-
-      if (MODE_ORDER.includes(value)) {
-        return value;
-      }
-    } catch (e) {
-      // localStorage is not available
-    }
-
     const rootMode = document.documentElement.getAttribute('data-theme-mode');
 
     if (MODE_ORDER.includes(rootMode)) {
@@ -126,7 +113,6 @@ export default class Theme {
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
     root.style.setProperty('--color-surface-body', themeColor);
-    root.style.backgroundColor = themeColor;
 
     if (persist) {
       this.saveMode(this.mode);
@@ -143,12 +129,6 @@ export default class Theme {
    * @param {string} mode
    */
   saveMode(mode) {
-    try {
-      this.storage.set(mode);
-    } catch (e) {
-      // localStorage is not available
-    }
-
     this.saveModeCookie(mode);
   }
 
@@ -162,7 +142,7 @@ export default class Theme {
       const config = window.CodeXDocsTheme || {};
       const cookiePath = config.cookiePath || '/';
 
-      document.cookie = `${STORAGE_KEY}=${encodeURIComponent(mode)}; Max-Age=${COOKIE_MAX_AGE}; Path=${cookiePath}; SameSite=Lax`;
+      document.cookie = `${THEME_COOKIE_NAME}=${encodeURIComponent(mode)}; Max-Age=${COOKIE_MAX_AGE}; Path=${cookiePath}; SameSite=Lax`;
     } catch (e) {
       // Cookies are not available
     }
