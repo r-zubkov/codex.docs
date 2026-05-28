@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% set initialTheme = theme is defined and theme ? theme : { mode: 'system', name: 'dark', color: '#0f141e' } %}
-<html data-theme-mode="{{ initialTheme.mode }}" data-theme="{{ initialTheme.name }}" style="--color-surface-body: {{ initialTheme.color }}; height: 100%; background-color: {{ initialTheme.color }}; color-scheme: {{ initialTheme.name }};">
+<html data-theme-mode="{{ initialTheme.mode }}" data-theme="{{ initialTheme.name }}" style="--color-surface-body: {{ initialTheme.color }}; height: 100%; background-color: var(--color-surface-body, {{ initialTheme.color }}); color-scheme: {{ initialTheme.name }};">
 <head>
   <title>{{ config.title }}</title>
   {% include "../components/theme-head.twig" %}
