@@ -74,7 +74,11 @@
    app.use(express.json({ limit: '5mb' }));
    app.use(express.urlencoded({ extended: true, limit: '5mb' }));
    app.use(cookieParser());
-   app.use(express.static(path.join(__dirname, '../../public')));
+   // Do not let static directory matching redirect /docs to /docs/.
+   // The docs root must reach SSR immediately so theme bootstrap is present in the first response.
+   app.use(express.static(path.join(__dirname, '../../public'), {
+     redirect: false,
+   }));
  
    if (appConfig.uploads.driver === 'local') {
      const uploadsPath = path.join(cwd, appConfig.uploads.local.path);
@@ -104,7 +108,6 @@
  
    return app;
  }
- 
  /**
   * Create and run HTTP server.
   */
@@ -199,4 +202,3 @@
        throw error;
    }
  }
- 
