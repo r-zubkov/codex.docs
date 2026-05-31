@@ -11,7 +11,7 @@ const router = express.Router();
 /**
  * Create new page form
  */
-router.get('/page/new', verifyToken, allowEdit, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/new', verifyToken, allowEdit, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const pagesAvailableGrouped = await Pages.groupByParent();
 
@@ -30,7 +30,7 @@ router.get('/page/new', verifyToken, allowEdit, async (req: Request, res: Respon
 /**
  * Edit page form
  */
-router.get('/page/edit/:id', verifyToken, allowEdit, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/edit/:id', verifyToken, allowEdit, async (req: Request, res: Response, next: NextFunction) => {
   const pageId = toEntityId(req.params.id);
 
   try {
@@ -58,7 +58,7 @@ router.get('/page/edit/:id', verifyToken, allowEdit, async (req: Request, res: R
 /**
  * View page
  */
-router.get('/page/:id', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/:id', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   const pageId = toEntityId(req.params.id);
 
   try {

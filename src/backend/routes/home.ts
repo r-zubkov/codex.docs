@@ -6,6 +6,8 @@ import Aliases from '../controllers/aliases.js';
 import Alias from '../models/alias.js';
 import Page from '../models/page.js';
 import PagesFlatArray from '../models/pagesFlatArray.js';
+import { allowView } from './middlewares/locals.js';
+import pagesMiddleware from './middlewares/pages.js';
 
 
 const router = express.Router();
@@ -51,7 +53,7 @@ async function getStartPage(uri: string): Promise<Page> {
 }
 
 /* GET home page. */
-router.get('/', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', verifyToken, allowView, pagesMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   const config = req.app.locals.config;
 
   try {

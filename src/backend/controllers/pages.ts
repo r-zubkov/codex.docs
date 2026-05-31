@@ -1,9 +1,6 @@
-import Page, { PageData } from '../models/page.js';
+import Page, { PageData, PageNavigationData } from '../models/page.js';
 import Alias from '../models/alias.js';
 import PagesOrder from './pagesOrder.js';
-import PageOrder from '../models/pageOrder.js';
-import HttpException from '../exceptions/httpException.js';
-import PagesFlatArray from '../models/pagesFlatArray.js';
 import { EntityId } from '../database/types.js';
 import { isEqualIds } from '../database/index.js';
 
@@ -49,13 +46,22 @@ class Pages {
   }
 
   /**
+   * Return all pages data needed for menus/navigation without page body
+   *
+   * @returns {Promise<PageNavigationData[]>}
+   */
+  public static async getNavigationPages(): Promise<PageNavigationData[]> {
+    return Page.getNavigationData();
+  }
+
+  /**
    * Return all pages without children of passed page
    *
    * @param {string} parent - id of current page
    * @returns {Promise<Page[]>}
    */
   public static async getAllExceptChildren(parent: EntityId): Promise<Page[]> {
-    const pagesAvailable = this.removeChildren(await Pages.getAllPages(), parent);
+    const pagesAvailable = this.removeChildren(await Page.getAllWithoutBody(), parent);
 
     const nullFilteredPages: Page[] = [];
 
@@ -66,24 +72,6 @@ class Pages {
     });
 
     return nullFilteredPages;
-  }
-
-  /**
-   * Helper to get all pages as map
-   */
-  private static async getPagesMap(): Promise<Map<string, Page>> {
-    const pages = await Pages.getAllPages();
-    const pagesMap = new Map<string, Page>();
-
-    pages.forEach(page => {
-      if (page._id) {
-        pagesMap.set(page._id.toString(), page);
-      } else {
-        throw new Error('Page id is not defined');
-      }
-    });
-
-    return pagesMap;
   }
 
   /**
@@ -107,8 +95,8 @@ class Pages {
     const pagesMap = await this.getPagesMap();
     const idsOfRootPages = rootPageOrder.order;
 
-    const getChildrenOrder = (pageId: EntityId): EntityId[] => {
-      const order = childPageOrder.find((order) => isEqualIds(order.page, pageId))?.order || [];
+    const getChildrenOrder = (currentPageId: EntityId): EntityId[] => {
+      const order = childPageOrder.find((pageOrder) => isEqualIds(pageOrder.page, currentPageId))?.order || [];
 
       if (order.length === 0) {
         return [];
@@ -160,14 +148,13 @@ class Pages {
    * @returns {Array<?Page>}
    */
   public static removeChildren(pagesAvailable: Array<Page | null>, parent: EntityId | undefined): Array<Page | null> {
-    pagesAvailable.forEach(async (item, index) => {
+    pagesAvailable.forEach((item, index) => {
       if (item === null || !isEqualIds(item._parent, parent)) {
         return;
       }
       pagesAvailable[index] = null;
       pagesAvailable = Pages.removeChildren(pagesAvailable, item._id);
     });
-    PagesFlatArray.regenerate();
 
     return pagesAvailable;
   }
@@ -194,7 +181,6 @@ class Pages {
 
         alias.save();
       }
-      await PagesFlatArray.regenerate();
 
       return insertedPage;
     } catch (e) {
@@ -238,7 +224,6 @@ class Pages {
         Alias.markAsDeprecated(previousUri);
       }
     }
-    await PagesFlatArray.regenerate();
 
     return updatedPage;
   }
@@ -263,9 +248,25 @@ class Pages {
     }
     const removedPage = page.destroy();
 
-    await PagesFlatArray.regenerate();
-
     return removedPage;
+  }
+
+  /**
+   * Helper to get all pages as map
+   */
+  private static async getPagesMap(): Promise<Map<string, Page>> {
+    const pages = await Page.getAllWithoutBody();
+    const pagesMap = new Map<string, Page>();
+
+    pages.forEach(page => {
+      if (page._id) {
+        pagesMap.set(page._id.toString(), page);
+      } else {
+        throw new Error('Page id is not defined');
+      }
+    });
+
+    return pagesMap;
   }
 
   /**

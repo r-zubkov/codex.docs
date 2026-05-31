@@ -76,9 +76,7 @@
    app.use(cookieParser());
    // Do not let static directory matching redirect /docs to /docs/.
    // The docs root must reach SSR immediately so theme bootstrap is present in the first response.
-   app.use(express.static(path.join(__dirname, '../../public'), {
-     redirect: false,
-   }));
+   app.use(express.static(path.join(__dirname, '../../public')));
  
    if (appConfig.uploads.driver === 'local') {
      const uploadsPath = path.join(cwd, appConfig.uploads.local.path);

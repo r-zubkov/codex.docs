@@ -53,6 +53,7 @@ export default async function buildStatic(): Promise<void> {
   console.log('Building static files');
   const pagesOrder = await PagesOrder.getAll();
   const allPages = await Page.getAll();
+  const navigationPages = await Page.getNavigationData();
 
   await mkdirp(distPath);
 
@@ -73,7 +74,7 @@ export default async function buildStatic(): Promise<void> {
     const parentIdOfRootPages = '0' as EntityId;
     const previousPage = await PagesFlatArray.getPageBefore(pageId);
     const nextPage = await PagesFlatArray.getPageAfter(pageId);
-    const menu = createMenuTree(parentIdOfRootPages, allPages, pagesOrder, 2);
+    const menu = createMenuTree(parentIdOfRootPages, navigationPages, pagesOrder, 2);
     const result = await renderTemplate('./views/pages/page.twig', {
       page,
       pageParent,

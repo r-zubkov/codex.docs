@@ -1,7 +1,13 @@
 import { EntityId } from '../database/types.js';
-import Page from '../models/page.js';
+import { PageNavigationData } from '../models/page.js';
 import PageOrder from '../models/pageOrder.js';
-import { isEqualIds } from '../database/index.js';
+
+export interface MenuPage {
+  _id: EntityId;
+  title: string;
+  uri?: string;
+  children: MenuPage[];
+}
 
 /**
  * Process one-level pages list to parent-children list
@@ -10,40 +16,69 @@ import { isEqualIds } from '../database/index.js';
  * @param pages - list of all available pages
  * @param pagesOrder - list of pages order
  * @param level - max level recursion
- * @param currentLevel - current level of element
  */
-export function createMenuTree(parentPageId: EntityId, pages: Page[], pagesOrder: PageOrder[], level = 1, currentLevel = 1): Page[] {
-  const childrenOrder = pagesOrder.find(order => isEqualIds(order.data.page, parentPageId));
+export function createMenuTree(parentPageId: EntityId, pages: PageNavigationData[], pagesOrder: PageOrder[], level = 1): MenuPage[] {
+  const pagesById = new Map<string, PageNavigationData>();
+  const pagesByParent = new Map<string, PageNavigationData[]>();
+  const ordersByPage = new Map<string, EntityId[]>();
 
-  /**
-   * branch is a page children in tree
-   * if we got some children order on parents tree, then we push found pages in order sequence
-   * otherwise just find all pages includes parent tree
-   */
-  let ordered: any[] = [];
+  pages.forEach(page => {
+    if (!page._id) {
+      return;
+    }
 
-  if (childrenOrder) {
-    ordered = childrenOrder.order.map((pageId: EntityId) => {
-      return pages.find(page => isEqualIds(page._id, pageId));
-    });
-  }
+    pagesById.set(page._id.toString(), page);
 
-  const unordered = pages.filter(page => isEqualIds(page._parent, parentPageId));
-  const branch = Array.from(new Set([...ordered, ...unordered]));
+    const parent = page.parent || '0' as EntityId;
+    const parentKey = parent.toString();
+    const siblings = pagesByParent.get(parentKey) || [];
 
-  /**
-   * stop recursion when we got the passed max level
-   */
-  if (currentLevel === level + 1) {
-    return [];
-  }
-
-  /**
-   * Each parents children can have subbranches
-   */
-  return branch.filter(page => page && page._id).map(page => {
-    return Object.assign({
-      children: createMenuTree(page._id, pages, pagesOrder, level, currentLevel + 1),
-    }, page.data);
+    siblings.push(page);
+    pagesByParent.set(parentKey, siblings);
   });
+
+  pagesOrder.forEach(order => {
+    if (order.page) {
+      ordersByPage.set(order.page.toString(), order.order);
+    }
+  });
+
+  const buildTree = (currentParentId: EntityId, currentLevel: number): MenuPage[] => {
+    const childrenOrder = ordersByPage.get(currentParentId.toString()) || [];
+
+    /**
+     * branch is a page children in tree
+     * if we got some children order on parents tree, then we push found pages in order sequence
+     * otherwise just find all pages includes parent tree
+     */
+    let ordered: PageNavigationData[] = [];
+
+    if (childrenOrder.length > 0) {
+      ordered = childrenOrder
+        .map(pageId => pagesById.get(pageId.toString()))
+        .filter((page): page is PageNavigationData => Boolean(page));
+    }
+
+    const unordered = pagesByParent.get(currentParentId.toString()) || [];
+    const branch = Array.from(new Set([...ordered, ...unordered]));
+
+    /**
+     * stop recursion when we got the passed max level
+     */
+    if (currentLevel === level + 1) {
+      return [];
+    }
+
+    /**
+     * Each parents children can have subbranches
+     */
+    return branch.filter((page): page is PageNavigationData & { _id: EntityId } => Boolean(page && page._id)).map(page => ({
+      _id: page._id,
+      title: page.title || '',
+      uri: page.uri || '',
+      children: buildTree(page._id, currentLevel + 1),
+    }));
+  };
+
+  return buildTree(parentPageId, 1);
 }

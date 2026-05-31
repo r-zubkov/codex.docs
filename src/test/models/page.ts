@@ -289,6 +289,55 @@ describe('Page model', () => {
     });
   });
 
+  it('Static getNavigationData method returns pages without body', async () => {
+    const pagesToSave = [
+      new Page({
+        body: {
+          blocks: [
+            {
+              type: 'header',
+              data: {
+                text: 'Navigation page 1'
+              }
+            }
+          ]
+        }
+      }),
+      new Page({
+        body: {
+          blocks: [
+            {
+              type: 'header',
+              data: {
+                text: 'Navigation page 2'
+              }
+            }
+          ]
+        }
+      })
+    ];
+
+    const savedPages = await Promise.all(pagesToSave.map(page => page.save()));
+    const foundPages = await Page.getNavigationData({_id: {$in: savedPages.map(page => page._id)}});
+    const foundTitles = foundPages.map(page => page.title);
+
+    expect(foundPages.length).to.equal(2);
+    expect(foundTitles).to.include('Navigation page 1');
+    expect(foundTitles).to.include('Navigation page 2');
+
+    foundPages.forEach(page => {
+      expect(page._id).not.to.be.undefined;
+      expect(page.uri).to.be.a('string');
+      expect(page.parent).to.equal('0');
+      expect((page as Page & { body?: unknown }).body).to.be.undefined;
+
+      const projectedPage = new Page(page);
+
+      expect(projectedPage.title).to.equal(page.title);
+      expect(projectedPage.body).to.be.undefined;
+    });
+  });
+
   it('Parent pages', async () => {
     const parent = new Page(
       {

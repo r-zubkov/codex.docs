@@ -7,12 +7,30 @@ const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 const parseForm = express.urlencoded({ extended: false });
 
+interface AuthViewData {
+  csrfToken: string;
+  header?: string;
+}
+
+/**
+ * Render auth page without documentation menu.
+ *
+ * @param res - response object
+ * @param data - auth view data
+ */
+function renderAuth(res: Response, data: AuthViewData): void {
+  res.render('auth', {
+    title: 'Login page',
+    menu: [],
+    ...data,
+  });
+}
+
 /**
  * Authorization page
  */
 router.get('/auth', csrfProtection, function (req: Request, res: Response) {
-  res.render('auth', {
-    title: 'Login page',
+  renderAuth(res, {
     csrfToken: req.csrfToken(),
   });
 });
@@ -23,8 +41,7 @@ router.get('/auth', csrfProtection, function (req: Request, res: Response) {
 router.post('/auth', parseForm, csrfProtection, async (req: Request, res: Response) => {
   try {
     if (!appConfig.auth.password) {
-      res.render('auth', {
-        title: 'Login page',
+      renderAuth(res, {
         header: 'Password not set',
         csrfToken: req.csrfToken(),
       });
@@ -33,8 +50,7 @@ router.post('/auth', parseForm, csrfProtection, async (req: Request, res: Respon
     }
 
     if (req.body.password !== appConfig.auth.password) {
-      res.render('auth', {
-        title: 'Login page',
+      renderAuth(res, {
         header: 'Wrong password',
         csrfToken: req.csrfToken(),
       });
@@ -55,8 +71,7 @@ router.post('/auth', parseForm, csrfProtection, async (req: Request, res: Respon
 
     res.redirect(appConfig.frontend.basePath);
   } catch (err) {
-    res.render('auth', {
-      title: 'Login page',
+    renderAuth(res, {
       header: 'Password not set',
       csrfToken: req.csrfToken(),
     });

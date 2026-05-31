@@ -1,4 +1,4 @@
-import Page from './page.js';
+import Page, { PageNavigationData } from './page.js';
 import PageOrder from './pageOrder.js';
 import NodeCache from 'node-cache';
 import { EntityId } from '../database/types.js';
@@ -77,22 +77,36 @@ class PagesFlatArray {
    * @returns {Promise<Array<PagesFlatArrayData>>}
    */
   public static async regenerate(): Promise<Array<PagesFlatArrayData>> {
-    const pages = await Page.getAll();
+    const pages = await Page.getNavigationData();
     const pagesOrders = await PageOrder.getAll();
 
     let arr = new Array<PagesFlatArrayData>();
+    const pagesById = new Map<string, PageNavigationData>();
+    const ordersByPage = new Map<string, EntityId[]>();
+
+    pages.forEach(page => {
+      if (page._id) {
+        pagesById.set(page._id.toString(), page);
+      }
+    });
+
+    pagesOrders.forEach(order => {
+      if (order.page) {
+        ordersByPage.set(order.page.toString(), order.order);
+      }
+    });
 
     // Get root order
-    const rootOrder = pagesOrders.find( order => order.page == '0' );
+    const rootOrder = ordersByPage.get('0');
 
     // Check is root order is not empty
     if (!rootOrder) {
       return [];
     }
 
-    for (const pageId of rootOrder.order) {
-      arr = arr.concat(this.getChildrenFlatArray(pageId, 0, pages,
-        pagesOrders));
+    for (const pageId of rootOrder) {
+      arr = arr.concat(this.getChildrenFlatArray(pageId, 0, pagesById,
+        ordersByPage));
     }
 
     // Save generated flat array to cache
@@ -146,34 +160,35 @@ class PagesFlatArray {
    *
    * @param pageId - parent page id
    * @param level - page level in sidebar
-   * @param pages - all pages
-   * @param orders - all page orders
+   * @param pagesById - all pages grouped by id
+   * @param ordersByPage - all page orders grouped by page id
    * @returns {Promise<Array<PagesFlatArrayData>>}
    */
   private static getChildrenFlatArray(pageId: EntityId, level: number,
-    pages: Array<Page>, orders: Array<PageOrder>): Array<PagesFlatArrayData> {
+    pagesById: Map<string, PageNavigationData>,
+    ordersByPage: Map<string, EntityId[]>): Array<PagesFlatArrayData> {
     let arr: Array<PagesFlatArrayData> = new Array<PagesFlatArrayData>();
 
-    const page = pages.find(item => isEqualIds(item._id, pageId));
+    const page = pagesById.get(pageId.toString());
 
     // Add element to child array
-    if (page) {
+    if (page && page._id) {
       arr.push( {
-        id: page._id!,
+        id: page._id,
         level: level,
-        parentId: page._parent,
+        parentId: page.parent,
         rootId: '0',
-        title: page.title!,
+        title: page.title || '',
         uri: page.uri,
       } );
     }
 
-    const order = orders.find(item => isEqualIds(item.page, pageId));
+    const order = ordersByPage.get(pageId.toString());
 
     if (order) {
-      for (const childPageId of order.order) {
+      for (const childPageId of order) {
         arr = arr.concat(this.getChildrenFlatArray(childPageId, level + 1,
-          pages, orders));
+          pagesById, ordersByPage));
       }
     }
 

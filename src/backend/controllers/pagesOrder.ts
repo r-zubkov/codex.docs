@@ -1,6 +1,5 @@
 import PageOrder from '../models/pageOrder.js';
 import Page from '../models/page.js';
-import PagesFlatArray from '../models/pagesFlatArray.js';
 import { EntityId } from '../database/types.js';
 import { isEqualIds, toEntityId } from '../database/index.js';
 
@@ -65,7 +64,6 @@ class PagesOrder {
 
     order.push(childId);
     await order.save();
-    await PagesFlatArray.regenerate();
   }
 
   /**
@@ -80,13 +78,11 @@ class PagesOrder {
 
     oldParentOrder.remove(targetPageId);
     await oldParentOrder.save();
-    await PagesFlatArray.regenerate();
 
     const newParentOrder = await PageOrder.get(newParentId);
 
     newParentOrder.push(targetPageId);
     await newParentOrder.save();
-    await PagesFlatArray.regenerate();
   }
 
   /**
@@ -135,7 +131,6 @@ class PagesOrder {
       .map(toEntityId);
     pageOrder.putAbove(currentPageId, putAbovePageId);
     await pageOrder.save();
-    await PagesFlatArray.regenerate();
   }
 
   /**
@@ -150,7 +145,6 @@ class PagesOrder {
     }
 
     await order.destroy();
-    await PagesFlatArray.regenerate();
   }
 }
 
