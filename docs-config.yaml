@@ -43,4 +43,4 @@ database:
 #   port: ""
 #   user: ""
 #   password: ""
-#   whiteList: ['']
+#   whiteList: [] # domains fetched without proxy, for example ['.so', 'docs.codex.so']

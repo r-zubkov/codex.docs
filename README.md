@@ -37,7 +37,7 @@ socksProxy:
   port: "9050"
   user: ""
   password: ""
-  whiteList: ["docs.codex.so"] # URLs from this list are requested without proxy
+  whiteList: [".so", "docs.codex.so"] # Hostnames matching these rules are requested without proxy
 ```
 
 ## Features

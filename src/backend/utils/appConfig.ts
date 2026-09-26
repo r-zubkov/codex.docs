@@ -17,7 +17,7 @@ const LocalUploadsConfig = z.object({
 /**
  * Config for local static uploads driver
  */
- const LocalStaticUploadsConfig = z.object({
+const LocalStaticUploadsConfig = z.object({
   driver: z.literal('static'),
   static: z.object({
     serverPrefix: z.string(), // server prefix
@@ -85,7 +85,8 @@ const FrontendConfig = z.object({
   startPage: z.string(), // Start page
   menu: z.array(z.union([
     z.string(),
-    z.object({ title: z.string(), uri: z.string() })
+    z.object({ title: z.string(),
+      uri: z.string() }),
   ])), // Menu for pages
 });
 
@@ -97,7 +98,10 @@ const SocksProxyConfig = z.object({
   port: z.string(), // Port
   user: z.string(), // User
   password: z.string(), // Password
-  whiteList: z.array(z.string()), // list of urls that will skip proxy
+  whiteList: z.array(z.string()).default([])
+    .transform(items => items
+      .map(item => item.trim())
+      .filter(Boolean)), // list of hostname rules that will skip proxy
 });
 
 /**
@@ -105,7 +109,8 @@ const SocksProxyConfig = z.object({
  */
 const StaticBuildConfig = z.object({
   outputDir: z.string(), // Output directory for static build
-  overwrite: z.boolean().optional().default(true),
+  overwrite: z.boolean().optional()
+    .default(true),
   indexPage: z.object({
     enabled: z.boolean(), // Is index page enabled
     uri: z.string(), // Index page uri
@@ -127,6 +132,14 @@ const AppConfig = z.object({
   database: z.union([LocalDatabaseConfig, MongoDatabaseConfig]), // Database configuration
   socksProxy: SocksProxyConfig.optional(), // Socks Proxy configuration
   staticBuild: StaticBuildConfig.optional(), // Static build configuration
+}).superRefine((config, context) => {
+  if (config.frontend.isUseSocksProxy && !config.socksProxy) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: [ 'socksProxy' ],
+      message: 'socksProxy is required when frontend.isUseSocksProxy is enabled',
+    });
+  }
 });
 
 export type AppConfig = z.infer<typeof AppConfig>;
@@ -141,9 +154,9 @@ const defaultConfig: AppConfig = {
     },
   },
   'frontend': {
-    'isPrivate': false, 
+    'isPrivate': false,
     'isUseSocksProxy': false,
-    'appName': 'docs',  
+    'appName': 'docs',
     'basePath': '/docs',
     'title': 'Docs',
     'description': 'Docs app',
